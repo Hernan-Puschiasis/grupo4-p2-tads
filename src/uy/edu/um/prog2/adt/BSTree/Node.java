@@ -236,7 +236,7 @@ public class Node<K extends Comparable<K>,T> {
 
     public LinkedList<T> recorrerPorNivel(){
         LinkedList<T> recorridos = new LinkedList<T>();
-        QueueOnePointer<Node<K,T>> cola = new QueueOnePointer<>();
+        QueueTwoPointers<Node<K,T>> cola = new QueueTwoPointers<Node<K, T>>();
         cola.enqueue(this);
         while(cola.getSize() != 0){
             try{

@@ -39,10 +39,15 @@ public class MyOpenHashImpl<K, V> implements MyHash<K,V> {
     public V get(K key) {
         int position = function(key);
         LinkedList<Bucket<K, V>> containingBucket = buckets[position];
-        for (int i = 0; i < containingBucket.getSize();i++){
-            if(containingBucket.get(i).getKey().equals(key)){
-                return containingBucket.get(i).getValue();
+        try{
+            for (int i = 0; i < containingBucket.getSize();i++){
+                if(containingBucket.get(i).getKey().equals(key)){
+                    return containingBucket.get(i).getValue();
+                }
             }
+
+        }catch (ListIndexOutOfRange e){
+
         }
         return null;
 

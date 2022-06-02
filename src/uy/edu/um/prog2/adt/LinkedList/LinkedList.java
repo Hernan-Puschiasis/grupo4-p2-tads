@@ -2,6 +2,7 @@ package uy.edu.um.prog2.adt.LinkedList;
 
 public class LinkedList<T> implements MyLinkedList<T> {
     private Node<T> head = null;
+    private Node<T> last = null;
     private int size = 0;
 
 
@@ -10,22 +11,23 @@ public class LinkedList<T> implements MyLinkedList<T> {
         if (this.getHead() == null){
             Node<T> firstNodo = new Node<T>(value);
             this.head = firstNodo;
+            this.last = firstNodo;
         }
         else{
-            Node currentNodo = this.getHead();
-            while(currentNodo.getNextNodo() != null){
-                currentNodo = currentNodo.getNextNodo();
-            }
             Node<T> newNodo = new Node<T>(value);
-            currentNodo.setNextNodo(newNodo);
+            last.setNextNodo(newNodo);
+            last = newNodo;
         }
         this.size = this.getSize() + 1;
 
     }
 
     @Override
-    public void remove(int position) {
-        if (position == 0) {
+    public void remove(int position) throws ListIndexOutOfRange{
+        if(position < 0 || position > size - 1 ){
+            throw new ListIndexOutOfRange();
+        }
+        else if (position == 0) {
             if (head.getNextNodo() == null){
                 this.getHead().setNextNodo(null);
                 this.getHead().setValue(null);
@@ -33,8 +35,8 @@ public class LinkedList<T> implements MyLinkedList<T> {
             else{
                 head = head.getNextNodo();
             }
-
-        } else {
+        }
+        else {
             Node<T> currentNodo = this.getHead();
             Node<T> previousNodo = null;
             for (int i = 0; i < position; i++) {
@@ -44,20 +46,22 @@ public class LinkedList<T> implements MyLinkedList<T> {
             }
             if (currentNodo.getNextNodo() == null) {
                 previousNodo.setNextNodo(null);
+                last = previousNodo;
             }
             else{
                 Node<T> nextNodo = currentNodo.getNextNodo();
                 previousNodo.setNextNodo(nextNodo);
-
-
             }
         }
         this.size = this.getSize() - 1;
     }
 
     @Override
-    public T get(int position) {
-        if (position == 0){
+    public T get(int position) throws ListIndexOutOfRange{
+        if(position < 0 || position > size - 1 ){
+            throw new ListIndexOutOfRange();
+        }
+        else if (position == 0){
             if (this.getHead() == null){
                 return null;
             }
@@ -89,7 +93,12 @@ public class LinkedList<T> implements MyLinkedList<T> {
             currentNode = currentNode.getNextNodo();
         }
         if(deletePosition != -1){
-            this.remove(deletePosition);
+            try{
+                this.remove(deletePosition);
+            }catch (ListIndexOutOfRange e){
+
+            }
+
         }
 
     }
@@ -119,6 +128,7 @@ public class LinkedList<T> implements MyLinkedList<T> {
         if (head == null){
             Node newNodo = new Node<T>(value);
             head = newNodo;
+            last = newNodo;
         }
         else{
             Node<T> firstNodo = new Node<T>(value);

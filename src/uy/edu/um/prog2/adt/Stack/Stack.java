@@ -1,6 +1,5 @@
 package uy.edu.um.prog2.adt.Stack;
 
-import java.util.EmptyStackException;
 
 public class Stack<T> implements MyStack<T> {
     Nodo<T> top = null;
