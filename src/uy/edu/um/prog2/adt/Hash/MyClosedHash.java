@@ -16,14 +16,14 @@ public class MyClosedHash<K,V> implements MyHash<K,V> {
         buckets = new Bucket[size];
         size = 10;
     }
-
+    //El put reescribe
     @Override
     public void put(K key, V value) {
         boolean is_put = false;
         int counter = 0;
         while(!is_put && counter < size){
             if (buckets[function(key,counter)] == null) {
-                 Bucket<K,V> newBucket = new Bucket<>(key,value);
+                Bucket<K,V> newBucket = new Bucket<>(key,value);
                 buckets[function(key,counter)] = newBucket;
                 is_put = true;
             }

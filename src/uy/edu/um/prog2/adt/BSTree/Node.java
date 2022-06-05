@@ -1,8 +1,4 @@
 package uy.edu.um.prog2.adt.BSTree;
-import uy.edu.um.prog2.adt.LinkedList.*;
-import uy.edu.um.prog2.adt.Queue.*;
-
-
 
 
 public class Node<K extends Comparable<K>,T> {
@@ -54,7 +50,8 @@ public class Node<K extends Comparable<K>,T> {
                 }
             }
             else{
-                Node<K,T> reintroducir = this.deleteRight(rightChild);
+                Node<K,T> reintroducir = this.minLeft(rightChild);
+                rightChild.delete(reintroducir.getKey(),this,-1);
                 this.key = reintroducir.getKey();
                 this.data = reintroducir.getData();
             }
@@ -79,14 +76,14 @@ public class Node<K extends Comparable<K>,T> {
 
     }
 
-    public Node<K,T> deleteRight(Node<K,T> node){
-        if(node.getRightChild() == null){
-            rightChild = null;
+    public Node<K,T> minLeft(Node<K,T> node){
+        if(node.getLeftChild() == null){
             return node;
         }
         else{
-            return deleteRight(node.getRightChild());
+            return minLeft(node.getLeftChild());
         }
+
     }
 
     public T find(K key){
@@ -145,115 +142,6 @@ public class Node<K extends Comparable<K>,T> {
         else{
             return leftChild.size() + rightChild.size() + 1;
         }
-    }
-
-    public int countLeaf(){
-        if(leftChild == null && rightChild == null){
-            return 1;
-        }
-        else if(leftChild == null){
-            return rightChild.countLeaf();
-        }
-        else if(rightChild == null){
-            return leftChild.countLeaf();
-        }
-        else{
-            return leftChild.countLeaf() + rightChild.countLeaf();
-        }
-    }
-
-    public int countCompleteElements(){
-        if(leftChild == null && rightChild == null){
-            return 0;
-        }
-        else if(leftChild == null){
-            return rightChild.countCompleteElements();
-        }
-        else if(rightChild == null){
-            return leftChild.countCompleteElements();
-        }
-        else{
-            return 1 + leftChild.countCompleteElements() + rightChild.countCompleteElements();
-        }
-    }
-
-    public void preOrder(LinkedList<T> elements){
-        elements.add(data);
-        if(leftChild == null && rightChild == null){
-
-        }
-        else if(leftChild == null){
-            rightChild.preOrder(elements);
-        }
-        else if(rightChild == null){
-            leftChild.preOrder(elements);
-        }
-        else{
-            leftChild.preOrder(elements);
-            rightChild.preOrder(elements);
-        }
-    }
-
-    public void postOrder(LinkedList<T> elements){
-        if(leftChild == null && rightChild == null){
-            elements.add(data);
-        }
-        else if(leftChild == null){
-            rightChild.postOrder(elements);
-            elements.add(data);
-        }
-        else if(rightChild == null){
-            leftChild.postOrder(elements);
-            elements.add(data);
-        }
-        else{
-            leftChild.postOrder(elements);
-            rightChild.postOrder(elements);
-            elements.add(data);
-        }
-    }
-
-    public void inOrder(LinkedList<T> elements){
-        if(leftChild == null && rightChild == null){
-            elements.add(data);
-        }
-        else if(leftChild == null){
-            elements.add(data);
-            rightChild.inOrder(elements);
-
-        }
-        else if(rightChild == null){
-            leftChild.inOrder(elements);
-            elements.add(data);
-        }
-        else{
-            leftChild.inOrder(elements);
-            elements.add(data);
-            rightChild.inOrder(elements);
-
-        }
-    }
-
-    public LinkedList<T> recorrerPorNivel(){
-        LinkedList<T> recorridos = new LinkedList<T>();
-        QueueTwoPointers<Node<K,T>> cola = new QueueTwoPointers<Node<K, T>>();
-        cola.enqueue(this);
-        while(cola.getSize() != 0){
-            try{
-                Node<K,T> actualNode = cola.dequeue();
-                recorridos.add(actualNode.getData());
-                if(actualNode.getLeftChild() != null){
-                    cola.enqueue(actualNode.getLeftChild());
-                }
-                if(actualNode.getRightChild() != null){
-                    cola.enqueue(actualNode.getRightChild());
-                }
-            }catch (EmptyQueueException e){}
-
-
-        }
-
-        return recorridos;
     }
 
     public Node<K, T> getLeftChild() {
