@@ -1,12 +1,12 @@
 package uy.edu.um.prog2.adt.Heap;
 
-public class MyHeapImpl<T extends Comparable<T>> implements MyHeap<T>{
+public class MyHeapMin<T extends Comparable<T>> implements MyHeap<T>{
     private T[] values;
     private int heapSize;
     private int maxSize;
 
-    public MyHeapImpl(int size){
-        this.values = (T[]) new Comparable[size]; //Cambie Object por Comparable
+    public MyHeapMin(int size){
+        this.values = (T[]) new Comparable[size];
         this.heapSize = 0;
         this.maxSize = size;
     }
@@ -25,11 +25,14 @@ public class MyHeapImpl<T extends Comparable<T>> implements MyHeap<T>{
     }
 
     @Override
-    public void insert(T value) {
+    public void insert(T value) throws HeapOverflow{
+        if(heapSize == maxSize){
+            throw new HeapOverflow();
+        }
         int position = heapSize;
         heapSize++;
         this.values[position] = value;
-        while(position != 0 && values[position].compareTo(values[getFatherPosition(position)]) > 0   ){
+        while(position != 0 && values[position].compareTo(values[getFatherPosition(position)]) < 0   ){
             values[position] = values[getFatherPosition(position)];
             values[getFatherPosition(position)] = value;
             position = getFatherPosition(position);
@@ -49,8 +52,8 @@ public class MyHeapImpl<T extends Comparable<T>> implements MyHeap<T>{
         values[position] = null;
         values[0] = last;
         position = 0;
-        while(2 * position < heapSize && values[getLeftChildPosition(position)] != null && values[getRightChildPosition(position)] != null && last.compareTo(max(values[getLeftChildPosition(position)],values[getRightChildPosition(position)])) < 0){
-            if(values[getLeftChildPosition(position)].equals(max(values[getLeftChildPosition(position)],values[getRightChildPosition(position)]))){
+        while(2 * position < heapSize && values[getLeftChildPosition(position)] != null && values[getRightChildPosition(position)] != null && last.compareTo(min(values[getLeftChildPosition(position)],values[getRightChildPosition(position)])) > 0){
+            if(values[getLeftChildPosition(position)].equals(min(values[getLeftChildPosition(position)],values[getRightChildPosition(position)]))){
                 T temp = values[position];
                 values[position] = values[getLeftChildPosition(position)];
                 values[getLeftChildPosition(position)] = temp;
@@ -68,14 +71,18 @@ public class MyHeapImpl<T extends Comparable<T>> implements MyHeap<T>{
 
             }
             else if(values[getLeftChildPosition(position)] == null){
-                T temp = values[position];
-                values[position] = values[getRightChildPosition(position)];
-                values[getRightChildPosition(position)] = temp;
+                if(values[getLeftChildPosition(position)].compareTo(last) < 0){
+                    T temp = values[position];
+                    values[position] = values[getRightChildPosition(position)];
+                    values[getRightChildPosition(position)] = temp;
+                }
             }
             else if(values[getRightChildPosition(position)] == null){
-                T temp = values[position];
-                values[position] = values[getLeftChildPosition(position)];
-                values[getLeftChildPosition(position)] = temp;
+                if(values[getLeftChildPosition(position)].compareTo(last) < 0){
+                    T temp = values[position];
+                    values[position] = values[getLeftChildPosition(position)];
+                    values[getLeftChildPosition(position)] = temp;
+                }
             }
         }catch (ArrayIndexOutOfBoundsException e){
 
@@ -83,12 +90,12 @@ public class MyHeapImpl<T extends Comparable<T>> implements MyHeap<T>{
 
         return max;
     }
-    private T max(T value1,T value2){
+    private T min(T value1,T value2){
         if(value1.compareTo(value2) < 0){
-            return value2;
+            return value1;
         }
         else{
-            return value1;
+            return value2;
         }
     }
 
@@ -117,5 +124,4 @@ public class MyHeapImpl<T extends Comparable<T>> implements MyHeap<T>{
     public boolean isEmpty() {
         return heapSize == 0;
     }
-
 }

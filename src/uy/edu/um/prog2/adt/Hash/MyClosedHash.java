@@ -11,12 +11,6 @@ public class MyClosedHash<K,V> implements MyHash<K,V> {
         buckets = new Bucket[size];
     }
 
-    @SuppressWarnings("unchecked")
-    public MyClosedHash() {
-        buckets = new Bucket[size];
-        size = 10;
-    }
-    //El put reescribe
     @Override
     public void put(K key, V value) {
         boolean is_put = false;
@@ -33,11 +27,18 @@ public class MyClosedHash<K,V> implements MyHash<K,V> {
                 buckets[function(key,counter)].setDeleted(false);
                 is_put = true;
             }
+            else if(buckets[function(key,counter)].getKey().equals(key)){
+                buckets[function(key,counter)].setValue(value);
+                return;
+            }
             else{
                 counter++;
             }
         }
         occupied ++;
+        if((float)occupied/size >= 0.8){
+            this.resize();
+        }
     }
 
     @Override
@@ -71,11 +72,11 @@ public class MyClosedHash<K,V> implements MyHash<K,V> {
         int counter = 0;
         while(!found && counter < size){
             if(buckets[function(key,counter)] == null){
-                found = true;
+                return;
             }
             else if(buckets[function(key,counter)].getKey().equals(key) ){
                 if(buckets[function(key,counter)].isDeleted()){
-                    found = true;
+                    return;
                 }
                 else{
                     buckets[function(key,counter)].setDeleted(true);
@@ -94,7 +95,23 @@ public class MyClosedHash<K,V> implements MyHash<K,V> {
         return occupied;
     }
 
-    private int function(K key,int i){
+
+    public void resize(){
+        MyClosedHash<K,V> newHash = new MyClosedHash<>(2 * size);
+        for(int i = 0; i < size; i++){
+            if (buckets[i] != null) {
+                newHash.put(buckets[i].getKey(),buckets[i].getValue());
+            }
+        }
+        size *= 2;
+        buckets = newHash.getBuckets();
+    }
+
+    public Bucket<K, V>[] getBuckets() {
+        return buckets;
+    }
+
+    private int function(K key, int i){
         return (key.hashCode() + i) % size;
     }
 }
