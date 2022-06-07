@@ -1,12 +1,13 @@
 import org.junit.jupiter.api.Test;
 import uy.edu.um.prog2.adt.LinkedList.LinkedList;
+import uy.edu.um.prog2.adt.LinkedList.ListIndexOutOfRange;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class LinkedListTest {
 
     @Test
-    void add() {
+    void add() throws ListIndexOutOfRange {
 
 
         LinkedList<Integer> sut = new LinkedList<>(); // test de add para LinkedList primera posición
@@ -24,7 +25,7 @@ class LinkedListTest {
     }
 
     @Test
-    void remove() {
+    void remove() throws ListIndexOutOfRange {
         //        AGREGAR EXCEPTION SI HAGO UN GET DE UNA LISTA VACÍA DEBE TIRAR EXCEPCIÓN
 
         LinkedList<Integer> sut = new LinkedList<>();
@@ -36,7 +37,7 @@ class LinkedListTest {
     }
 
     @Test
-    void get() {
+    void get() throws ListIndexOutOfRange {
         LinkedList<Integer> sut = new LinkedList<>();
         sut.add(1);
         assertEquals(1, sut.get(0));
@@ -45,7 +46,7 @@ class LinkedListTest {
     }
 
     @Test
-    void removeValue() {
+    void removeValue() throws ListIndexOutOfRange {
         LinkedList<String> sut = new LinkedList<>();
         sut.add("Hola");
         sut.add("Mundo");
@@ -66,7 +67,7 @@ class LinkedListTest {
     }
 
     @Test
-    void addFirst() {
+    void addFirst() throws ListIndexOutOfRange {
         LinkedList<Integer> sut = new LinkedList<>();
         sut.add(12);
         sut.add(16);
