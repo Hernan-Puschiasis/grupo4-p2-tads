@@ -29,8 +29,8 @@ public class LinkedList<T> implements MyLinkedList<T> {
         }
         else if (position == 0) {
             if (head.getNextNodo() == null){
-                this.getHead().setNextNodo(null);
-                this.getHead().setValue(null);
+                head = null;
+                last = null;
             }
             else{
                 head = head.getNextNodo();
@@ -84,7 +84,7 @@ public class LinkedList<T> implements MyLinkedList<T> {
         int deletePosition = -1;
         Node<T> currentNode =  head;
         boolean encontrado = false;
-        while(currentNode != null && !encontrado){
+        while(currentNode != null && !encontrado && position < size - 1){
             position ++;
             if(currentNode.getValue().equals(value)){
                 deletePosition = position;
@@ -102,8 +102,6 @@ public class LinkedList<T> implements MyLinkedList<T> {
         }
 
     }
-
-
 
     public boolean inList(T value){
         boolean isInList = false;
@@ -140,15 +138,6 @@ public class LinkedList<T> implements MyLinkedList<T> {
         this.size = this.getSize() + 1;
     }
 
-    public void display(){
-        Node<T> currentNodo = this.head;
-        while(currentNodo.getNextNodo() != null){
-            System.out.print(currentNodo.getValue());
-            System.out.print(" ");
-            currentNodo = currentNodo.getNextNodo();
-        }
-        System.out.println(currentNodo.getValue());
-    }
 
     public Node<T> getHead() {
         return head;
