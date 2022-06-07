@@ -41,16 +41,17 @@ public class BSTree<K extends Comparable<K>,T> implements MyTree<K,T> {
             else if(root.getRightChild() == null){
                 root = root.getLeftChild();
             }else{
-                Node<K,T> reintroducir = root.deleteRight(root.getRightChild());
+                Node<K,T> reintroducir = root.minLeft(root.getRightChild());
+                root.delete(reintroducir.getKey(), root,-1);
                 root.setKey(reintroducir.getKey());
                 root.setData(reintroducir.getData());
             }
         }
         else if(root.getKey().compareTo(key) > 0){
-            root.delete(key,root,1);
+            root.getLeftChild().delete(key,root,1);
         }
         else{
-            root.delete(key,root,-1);
+            root.getRightChild().delete(key,root,-1);
         }
 
     }
@@ -61,66 +62,6 @@ public class BSTree<K extends Comparable<K>,T> implements MyTree<K,T> {
         }
         else {
             return root.size();
-        }
-    }
-
-    public int countLeaf(){
-        if(root == null){
-            return 0;
-        }
-        else{
-            return root.countLeaf();
-        }
-    }
-
-    public int countCompleteElements(){
-        if(root == null){
-            return 0;
-        }
-        else{
-            return root.countCompleteElements();
-        }
-    }
-
-    public LinkedList<T> preOrder(){
-        if(root == null){
-            return null;
-        }
-        else{
-            LinkedList<T> elements = new LinkedList<T>();
-            root.preOrder(elements);
-            return elements;
-        }
-    }
-
-    public LinkedList<T> postOrder(){
-        if(root == null){
-            return null;
-        }
-        else{
-            LinkedList<T> elements = new LinkedList<T>();
-            root.postOrder(elements);
-            return elements;
-        }
-    }
-
-    public LinkedList<T> inOrder(){
-        if(root == null){
-            return null;
-        }
-        else{
-            LinkedList<T> elements = new LinkedList<T>();
-            root.inOrder(elements);
-            return elements;
-        }
-    }
-
-    public LinkedList<T>  recorrerPorNivel(){
-        if(root == null){
-            return null;
-        }
-        else{
-            return root.recorrerPorNivel();
         }
     }
 }
