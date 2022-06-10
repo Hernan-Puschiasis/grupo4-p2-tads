@@ -56,6 +56,26 @@ class MyHeapMaxTest {
         }catch (EmptyHeapException e){}
         assertEquals("5 \n3 4 \n0 2 1 ",sut.toString());
 
+        MyHeapMax<Integer> sut2 = new MyHeapMax<>(11);
+        try{
+            sut2.insert(10);
+            sut2.insert(9);
+            sut2.insert(8);
+            sut2.insert(6);
+            sut2.insert(7);
+            sut2.insert(5);
+            sut2.insert(4);
+            sut2.insert(3);
+            sut2.insert(2);
+            sut2.insert(1);
+            sut2.insert(0);
+
+        }catch (HeapOverflow e){}
+        try{
+            assertEquals(10,sut2.delete());
+        }catch (EmptyHeapException e){}
+
+
 
     }
 

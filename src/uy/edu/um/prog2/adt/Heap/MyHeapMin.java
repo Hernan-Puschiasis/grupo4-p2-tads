@@ -52,7 +52,7 @@ public class MyHeapMin<T extends Comparable<T>> implements MyHeap<T>{
         values[position] = null;
         values[0] = last;
         position = 0;
-        while(2 * position < heapSize && values[getLeftChildPosition(position)] != null && values[getRightChildPosition(position)] != null && last.compareTo(min(values[getLeftChildPosition(position)],values[getRightChildPosition(position)])) > 0){
+        while(2 * position < heapSize && getLeftChildPosition(position) < maxSize &&values[getLeftChildPosition(position)] != null && values[getRightChildPosition(position)] != null && last.compareTo(min(values[getLeftChildPosition(position)],values[getRightChildPosition(position)])) > 0){
             if(values[getLeftChildPosition(position)].equals(min(values[getLeftChildPosition(position)],values[getRightChildPosition(position)]))){
                 T temp = values[position];
                 values[position] = values[getLeftChildPosition(position)];
@@ -66,26 +66,33 @@ public class MyHeapMin<T extends Comparable<T>> implements MyHeap<T>{
                 position = getRightChildPosition(position);
             }
         }
-        try{
-            if(values[getLeftChildPosition(position)] == null && values[getRightChildPosition(position)] == null){
-
-            }
-            else if(values[getLeftChildPosition(position)] == null){
-                if(values[getLeftChildPosition(position)].compareTo(last) < 0){
-                    T temp = values[position];
-                    values[position] = values[getRightChildPosition(position)];
-                    values[getRightChildPosition(position)] = temp;
-                }
-            }
-            else if(values[getRightChildPosition(position)] == null){
-                if(values[getLeftChildPosition(position)].compareTo(last) < 0){
+        if (getLeftChildPosition(position) >= maxSize){}
+        else if(getLeftChildPosition(position) < maxSize && getRightChildPosition(position) >= maxSize) {
+            if(values[getLeftChildPosition(position)] == null){}
+            else{
+                if (values[getLeftChildPosition(position)].compareTo(last) < 0) {
                     T temp = values[position];
                     values[position] = values[getLeftChildPosition(position)];
                     values[getLeftChildPosition(position)] = temp;
                 }
             }
-        }catch (ArrayIndexOutOfBoundsException e){
+        }
+        else {
+            if (values[getLeftChildPosition(position)] == null && values[getRightChildPosition(position)] == null) {}
+            else if (values[getLeftChildPosition(position)] == null) {
+                if (values[getRightChildPosition(position)].compareTo(last) < 0) {
+                    T temp = values[position];
+                    values[position] = values[getRightChildPosition(position)];
+                    values[getRightChildPosition(position)] = temp;
+                }
 
+            } else if (values[getRightChildPosition(position)] == null) {
+                if (values[getLeftChildPosition(position)].compareTo(last) < 0) {
+                    T temp = values[position];
+                    values[position] = values[getLeftChildPosition(position)];
+                    values[getLeftChildPosition(position)] = temp;
+                }
+            }
         }
 
         return max;

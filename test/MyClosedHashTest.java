@@ -100,4 +100,19 @@ class MyClosedHashTest {
         assertEquals("1",sut.get("1"));
 
     }
+
+    @Test
+    void inHash(){
+        MyClosedHash<String,String>  sut = new MyClosedHash<String,String>(5);
+        assertFalse(sut.inHash("1"));
+        sut.put("1","3");
+        assertFalse(sut.inHash("2"));
+        assertTrue(sut.inHash("1"));
+        sut.put("2","2");
+        assertTrue(sut.inHash("2"));
+        assertTrue(sut.inHash("1"));
+        assertFalse(sut.inHash("3"));
+        sut.delete("2");
+        assertFalse(sut.inHash("2"));
+    }
 }
