@@ -114,6 +114,6 @@ public class MyClosedHash<K,V> implements MyHash<K,V> {
     }
 
     private int function(K key, int i){
-        return (key.hashCode() + i) % size;
+        return ((key.hashCode() + i) % size + size) % size;
     }
 }

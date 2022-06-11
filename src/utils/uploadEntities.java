@@ -2,6 +2,8 @@ package utils;
 
 import entities.*;
 import uy.edu.um.prog2.adt.Hash.MyClosedHash;
+
+import java.time.Instant;
 import java.util.Date;
 
 public class uploadEntities {
@@ -23,7 +25,11 @@ public class uploadEntities {
         }
         else{
             Style beerStyle = new Style(line[8]);
-            Beer newBeer = new Beer(Long.parseLong(line[13]),line[11],Double.parseDouble(line[12]),beerStyle);
+            double beerAbv = 0;
+            if(!line[12].isEmpty()){
+                beerAbv = Double.parseDouble(line[12]);
+            }
+            Beer newBeer = new Beer(Long.parseLong(line[13]),line[11],beerAbv,beerStyle);
             newBeer.addReview(Long.parseLong(line[0]));
             beers.put(Long.parseLong(line[13]),newBeer);
         }
@@ -42,8 +48,10 @@ public class uploadEntities {
     }
 
     public static void addReview(MyClosedHash<Long, Review> reviews, String[] line){
-        Review newReview = new Review(Long.parseLong(line[0]),new Date(),Double.parseDouble(line[4]),
-                Double.parseDouble(line[5]),Double.parseDouble(line[6]),Double.parseDouble(line[11]),
+        Instant newInstant = Instant.ofEpochSecond(Long.parseLong(line[3]));
+        Date newDate = Date.from(newInstant);
+        Review newReview = new Review(Long.parseLong(line[0]),newDate,Double.parseDouble(line[4]),
+                Double.parseDouble(line[5]),Double.parseDouble(line[6]),Double.parseDouble(line[10]),
                 Long.parseLong(line[13]),Long.parseLong(line[1]));
         reviews.put(Long.parseLong(line[0]),newReview);
     }

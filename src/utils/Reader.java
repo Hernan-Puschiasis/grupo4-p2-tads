@@ -1,6 +1,8 @@
 package utils;
 import com.opencsv.CSVReader;
 import java.io.FileReader;
+import static utils.uploadEntities.*;
+
 
 public class Reader {
     public static void uploadData(){
@@ -11,11 +13,7 @@ public class Reader {
 
             int counter = 0;
             while ((line = csvReader.readNext()) != null) {
-                if(counter < 3){
-                    System.out.print(counter);
-                    System.out.println(line[0] + " " + line[1] + " " + line[2]);
-                }
-                counter++;
+                //addReview();
             }
             reader.close();
             csvReader.close();

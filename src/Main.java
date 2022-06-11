@@ -2,6 +2,8 @@ import com.opencsv.CSVReader;
 import entities.*;
 import uy.edu.um.prog2.adt.Hash.MyClosedHash;
 import java.io.FileReader;
+import static utils.uploadEntities.*;
+import static utils.Operations.*;
 
 
 public class Main {
@@ -13,17 +15,22 @@ public class Main {
 
 
     public static void main(String[] args) {
-        uploadData();
-
+        Main main = new Main();
+        main.uploadData();
+        top10Breweries(main.breweries,main.reviews.getBuckets(),"2011");
     }
 
-    public static void uploadData(){
+    public void uploadData(){
         try{
             FileReader reader = new FileReader("/home/hernan/Desktop/Programacion/Prog2/Obligatorio/grupo4-p2-tads/src/beer_dataset_test.csv");
             CSVReader csvReader = new CSVReader(reader);
             String[] line = csvReader.readNext();
             while ((line = csvReader.readNext()) != null) {
-
+                addReview(reviews,line);
+                addBeer(beers,line);
+                addBrewery(breweries,line);
+                addStyle(styles,line);
+                addUser(users,line);
             }
             reader.close();
             csvReader.close();

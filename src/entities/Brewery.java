@@ -14,5 +14,16 @@ public class Brewery {
     }
 
     public void addReview(long reviewID){reviewIDs.add(reviewID);}
-    //public void add
+
+    public long getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public LinkedList<Long> getReviewIDs() {
+        return reviewIDs;
+    }
 }

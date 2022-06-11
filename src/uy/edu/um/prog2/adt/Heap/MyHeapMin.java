@@ -131,4 +131,8 @@ public class MyHeapMin<T extends Comparable<T>> implements MyHeap<T>{
     public boolean isEmpty() {
         return heapSize == 0;
     }
+
+    public T min(){
+        return values[0];
+    }
 }
