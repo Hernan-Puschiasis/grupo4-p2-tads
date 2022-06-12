@@ -1,12 +1,13 @@
 package entities;
 
+import uy.edu.um.prog2.adt.ArrayList.ArrayList;
 import uy.edu.um.prog2.adt.LinkedList.LinkedList;
 
 public class Beer {
     long id;
     String name;
     double abv;
-    LinkedList<Long> reviewIDs = new LinkedList<>();
+    ArrayList<Long> reviewIDs = new ArrayList<>(100);
     Style style;
 
     public Beer(long id, String name, double abv, Style style){
@@ -18,5 +19,13 @@ public class Beer {
 
     public void addReview(long reviewID){
         reviewIDs.add(reviewID);
+    }
+
+    public ArrayList<Long> getReviewIDs(){
+        return reviewIDs;
+    }
+
+    public String getName() {
+        return name;
     }
 }

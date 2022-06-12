@@ -1,6 +1,5 @@
 0,1,2,3,4,5,6,7,8,9,10,11,12,13
-,brewery_id,brewery_name,review_time,review_overall,review
-_aroma,review_appearance,review_profilename,beer_style,review_palate,review_taste,beer_name,beer_abv,beer_beerid
+,brewery_id,brewery_name,review_time,review_overall,review_aroma,review_appearance,review_profilename,beer_style,review_palate,review_taste,beer_name,beer_abv,beer_beerid
 692532,252,Bayerische Staatsbrauerei Weihenstephan,1295153379,5.0,4.0,4.5,ms11781,Hefeweizen,4.0,4.0,Weihenstephaner Hefeweissbier,5.4,731
 1572956,1478,Grand Ridge Brewing Co.,1112458398,4.0,4.0,3.5,Bitterman,English Barleywine,4.5,4.0,Grand Ridge Supershine,11.0,3902
 1215749,708,F&M Brewery,1322800819,4.0,4.0,3.5,liamt07,American Double / Imperial Stout,3.5,4.0,"StoneHammer ""Two-Lumps"" Imperial Coffee Stout",8.0,75901

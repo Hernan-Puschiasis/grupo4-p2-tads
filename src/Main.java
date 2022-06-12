@@ -18,9 +18,12 @@ public class Main {
         Main main = new Main();
         main.uploadData();
         top10Breweries(main.breweries,main.reviews.getBuckets(),"2011");
+        top5Beers(main.beers,main.reviews);
+        top7BeerStyles(main.reviews.getBuckets());
     }
 
     public void uploadData(){
+        long startTime = System.currentTimeMillis();
         try{
             FileReader reader = new FileReader("/home/hernan/Desktop/Programacion/Prog2/Obligatorio/grupo4-p2-tads/src/beer_dataset_test.csv");
             CSVReader csvReader = new CSVReader(reader);
@@ -37,5 +40,10 @@ public class Main {
         }catch (Exception e){
             e.printStackTrace();
         }
+        long stopTime = System.currentTimeMillis();
+        long timeSpent = (stopTime - startTime);
+        System.out.print("Time execution: ");
+        System.out.print(timeSpent);
+        System.out.println("ms");
     }
 }

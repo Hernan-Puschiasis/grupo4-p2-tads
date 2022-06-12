@@ -11,8 +11,9 @@ public class Review {
     double flavourScore;
     long beer_id;
     long brewery_id;
+    String style;
 
-    public Review(long id, Date date, double overallScore, double aromaScore, double appearanceScore, double flavourScore,long beer_id,long brewery_id){
+    public Review(long id, Date date, double overallScore, double aromaScore, double appearanceScore, double flavourScore,long beer_id,long brewery_id,String style){
         this.id = id;
         this.date = date;
         this.overallScore = overallScore;
@@ -21,6 +22,7 @@ public class Review {
         this.flavourScore = flavourScore;
         this.beer_id = beer_id;
         this.brewery_id = brewery_id;
+        this.style = style;
     }
 
     public Date getDate() {
@@ -41,5 +43,9 @@ public class Review {
 
     public long getBrewery_id() {
         return brewery_id;
+    }
+
+    public String getStyle() {
+        return style;
     }
 }

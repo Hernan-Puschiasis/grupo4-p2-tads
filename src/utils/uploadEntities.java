@@ -52,7 +52,7 @@ public class uploadEntities {
         Date newDate = Date.from(newInstant);
         Review newReview = new Review(Long.parseLong(line[0]),newDate,Double.parseDouble(line[4]),
                 Double.parseDouble(line[5]),Double.parseDouble(line[6]),Double.parseDouble(line[10]),
-                Long.parseLong(line[13]),Long.parseLong(line[1]));
+                Long.parseLong(line[13]),Long.parseLong(line[1]),line[8]);
         reviews.put(Long.parseLong(line[0]),newReview);
     }
 
@@ -63,6 +63,7 @@ public class uploadEntities {
         else{
             Style newStyle = new Style(line[8]);
             newStyle.addBeer(Long.parseLong(line[13]));
+            newStyle.addReview(Long.parseLong(line[0]));
             styles.put(line[8],newStyle);
         }
     }
