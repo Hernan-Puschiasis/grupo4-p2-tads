@@ -25,15 +25,17 @@ public class Main {
     public void uploadData(){
         long startTime = System.currentTimeMillis();
         try{
-            FileReader reader = new FileReader("/home/hernan/Desktop/Programacion/Prog2/Obligatorio/grupo4-p2-tads/src/beer_dataset_test.csv");
+            FileReader reader = new FileReader("src/beer_dataset_test.csv");
             CSVReader csvReader = new CSVReader(reader);
             String[] line = csvReader.readNext();
             while ((line = csvReader.readNext()) != null) {
-                addReview(reviews,line);
-                addBeer(beers,line);
-                addBrewery(breweries,line);
-                addStyle(styles,line);
-                addUser(users,line);
+                if(!line[12].isEmpty()) {
+                    addReview(reviews, line);
+                    addBeer(beers, line);
+                    addBrewery(breweries, line);
+                    addStyle(styles, line);
+                    addUser(users, line);
+                }
             }
             reader.close();
             csvReader.close();

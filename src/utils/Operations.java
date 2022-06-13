@@ -91,12 +91,8 @@ public class Operations {
 
 
     }
-    public static void top15Users(Bucket<Long, User>[] users){
-
-    }
-    public static void reviewsBetweenDates(Bucket<Long, Review>[] reviews, Date initial, Date last){
-
-    }
+    public static void top15Users(Bucket<String, User>[] users){}
+    public static void reviewsBetweenDates(Bucket<Long, Review>[] reviews, Date initial, Date last){}
     public static void top7BeerStyles(Bucket<Long, Review>[] reviews){
         long startTime = System.currentTimeMillis();
         MyClosedHash<String, StyleArome> stylesRated = new MyClosedHash<>(1000);

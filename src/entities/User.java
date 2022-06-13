@@ -13,4 +13,8 @@ public class User{
     public void addReview(long reviewId){
         reviewIDs.add(reviewId);
     }
+
+    public LinkedList<Long> getReviewIDs() {
+        return reviewIDs;
+    }
 }

@@ -25,11 +25,7 @@ public class uploadEntities {
         }
         else{
             Style beerStyle = new Style(line[8]);
-            double beerAbv = 0;
-            if(!line[12].isEmpty()){
-                beerAbv = Double.parseDouble(line[12]);
-            }
-            Beer newBeer = new Beer(Long.parseLong(line[13]),line[11],beerAbv,beerStyle);
+            Beer newBeer = new Beer(Long.parseLong(line[13]),line[11],Double.parseDouble(line[12]),beerStyle);
             newBeer.addReview(Long.parseLong(line[0]));
             beers.put(Long.parseLong(line[13]),newBeer);
         }
