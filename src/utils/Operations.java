@@ -3,6 +3,7 @@ package utils;
 import auxiliarEntities.BeerReviewsQuantity;
 import auxiliarEntities.BreweryQuantity;
 import auxiliarEntities.StyleArome;
+import auxiliarEntities.UserReviewsQuantity;
 import entities.*;
 import uy.edu.um.prog2.adt.Hash.Bucket;
 import uy.edu.um.prog2.adt.Hash.MyClosedHash;
@@ -91,7 +92,63 @@ public class Operations {
 
 
     }
-    public static void top15Users(Bucket<String, User>[] users){}
+    public static void top15Users(Bucket<String, User>[] users){
+        long startTime = System.currentTimeMillis();
+        MyHeapMin<UserReviewsQuantity> top15 = new MyHeapMin<>(15);
+        boolean isFull = false;
+        int counter = 0;
+        for(int i = 0; i < users.length; i++){
+            if(users[i] != null){
+                if(isFull){
+                    if(users[i].getValue().getReviewIDs().getSize() > top15.min().getQuantity()){
+                        try {
+                            top15.delete();
+                        } catch (EmptyHeapException e) {
+                            e.printStackTrace();
+                        }
+                        try {
+                            top15.insert(new UserReviewsQuantity(users[i].getKey(),users[i].getValue().getReviewIDs().getSize()));
+                        } catch (HeapOverflow e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+                else{
+                    try {
+                        top15.insert(new UserReviewsQuantity(users[i].getKey(),users[i].getValue().getReviewIDs().getSize()));
+                        counter++;
+                        if(counter == 15){
+                            isFull = true;
+                        }
+                    } catch (HeapOverflow e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }
+        UserReviewsQuantity[] usersTop15 = new UserReviewsQuantity[top15.size()];
+        for(int i = usersTop15.length - 1; i >= 0 ;i--){
+            try {
+                usersTop15[i] = top15.delete();
+            }catch (EmptyHeapException e){
+                e.printStackTrace();
+            }
+        }
+        for(int i = 0; i < usersTop15.length; i++){
+            System.out.print(i+1);
+            System.out.print(", ");
+            System.out.print("Username: ");
+            System.out.print(usersTop15[i].getUsername());
+            System.out.print(", ");
+            System.out.print("Reviews: ");
+            System.out.println(usersTop15[i].getQuantity());
+        }
+        long stopTime = System.currentTimeMillis();
+        long timeSpent = (stopTime - startTime);
+        System.out.print("Time execution: ");
+        System.out.print(timeSpent);
+        System.out.println("ms");
+    }
     public static void reviewsBetweenDates(Bucket<Long, Review>[] reviews, Date initial, Date last){}
     public static void top7BeerStyles(Bucket<Long, Review>[] reviews){
         long startTime = System.currentTimeMillis();
