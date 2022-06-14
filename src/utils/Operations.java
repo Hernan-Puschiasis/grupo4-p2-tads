@@ -11,6 +11,7 @@ import uy.edu.um.prog2.adt.Heap.EmptyHeapException;
 import uy.edu.um.prog2.adt.Heap.HeapOverflow;
 import uy.edu.um.prog2.adt.Heap.MyHeapMin;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -149,7 +150,33 @@ public class Operations {
         System.out.print(timeSpent);
         System.out.println("ms");
     }
-    public static void reviewsBetweenDates(Bucket<Long, Review>[] reviews, Date initial, Date last){}
+    public static void reviewsBetweenDates(Bucket<Long, Review>[] reviews, Date initial, Date last){
+        long startTime = System.currentTimeMillis();
+        int reviewsInRange = 0;
+        SimpleDateFormat formatDate = new SimpleDateFormat("DD-MM-yyyy");
+        Date reviewDate;
+        for(int i = 0;i < reviews.length; i++){
+            if(reviews[i] != null){
+                try {
+                    reviewDate = formatDate.parse(formatDate.format(reviews[i].getValue().getDate()));
+                    if((reviewDate.after(initial) && reviewDate.before(last) || reviewDate.equals(initial) || reviewDate.equals(last))){
+                        reviewsInRange++;
+                    }
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        }
+        System.out.print("Reviews: ");
+        System.out.println(reviewsInRange);
+        long stopTime = System.currentTimeMillis();
+        long timeSpent = (stopTime - startTime);
+        System.out.print("Time execution: ");
+        System.out.print(timeSpent);
+        System.out.println("ms");
+    }
+
     public static void top7BeerStyles(Bucket<Long, Review>[] reviews){
         long startTime = System.currentTimeMillis();
         MyClosedHash<String, StyleArome> stylesRated = new MyClosedHash<>(1000);
