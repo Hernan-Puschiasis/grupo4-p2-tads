@@ -1,6 +1,7 @@
 import org.junit.jupiter.api.Test;
 import uy.edu.um.prog2.adt.Heap.EmptyHeapException;
 import uy.edu.um.prog2.adt.Heap.HeapOverflow;
+import uy.edu.um.prog2.adt.Heap.MyHeap;
 import uy.edu.um.prog2.adt.Heap.MyHeapMin;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -9,7 +10,7 @@ class MyHeapMinTest {
 
     @Test
     void insert() {
-        MyHeapMin<Integer> sut = new MyHeapMin<>(10);
+        MyHeap<Integer> sut = new MyHeapMin<>(10);
         try{
             sut.insert(9);
             sut.insert(8);
@@ -31,7 +32,7 @@ class MyHeapMinTest {
 
     @Test
     void delete() {
-        MyHeapMin<Integer> sut = new MyHeapMin<>(10);
+        MyHeap<Integer> sut = new MyHeapMin<>(10);
         //Tira excepción
         Exception exception = assertThrows(EmptyHeapException.class,() -> {
             sut.delete();
@@ -59,7 +60,7 @@ class MyHeapMinTest {
 
     @Test
     void testToString() {
-        MyHeapMin<Integer> sut = new MyHeapMin<>(12);
+        MyHeap<Integer> sut = new MyHeapMin<>(12);
         try{
             sut.insert(10);
             sut.insert(9);
@@ -82,7 +83,7 @@ class MyHeapMinTest {
 
     @Test
     void size() {
-        MyHeapMin<Integer> sut = new MyHeapMin<>(6);
+        MyHeap<Integer> sut = new MyHeapMin<>(6);
         //Cuando está vacío
         assertEquals(0,sut.size());
         //Cuando se inserta 1
@@ -105,7 +106,7 @@ class MyHeapMinTest {
 
     @Test
     void isEmpty() {
-        MyHeapMin<Integer> sut = new MyHeapMin<>(6);
+        MyHeap<Integer> sut = new MyHeapMin<>(6);
         assertTrue(sut.isEmpty());
         try{
             sut.insert(0);
@@ -115,6 +116,16 @@ class MyHeapMinTest {
             sut.delete();
         }catch (EmptyHeapException e){}
         assertTrue(sut.isEmpty());
+    }
+
+    @Test
+    void top(){
+        MyHeap<Integer> sut = new MyHeapMin<>(10);
+        assertNull(sut.top());
+        try{
+            sut.insert(9);
+        }catch (HeapOverflow e){}
+        assertEquals(9,sut.top());
     }
 
 }

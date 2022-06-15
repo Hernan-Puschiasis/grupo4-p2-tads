@@ -1,14 +1,13 @@
 import org.junit.jupiter.api.Test;
-import uy.edu.um.prog2.adt.Heap.EmptyHeapException;
-import uy.edu.um.prog2.adt.Heap.HeapOverflow;
-import uy.edu.um.prog2.adt.Heap.MyHeapMax;
+import uy.edu.um.prog2.adt.Heap.*;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class MyHeapMaxTest {
 
     @Test
     void insert() {
-        MyHeapMax<Integer> sut = new MyHeapMax<>(10);
+        MyHeap<Integer> sut = new MyHeapMax<>(10);
         try{
             sut.insert(0);
             sut.insert(1);
@@ -31,7 +30,7 @@ class MyHeapMaxTest {
 
     @Test
     void delete() {
-        MyHeapMax<Integer> sut = new MyHeapMax<>(10);
+        MyHeap<Integer> sut = new MyHeapMax<>(10);
         //Tira excepción
         Exception exception = assertThrows(EmptyHeapException.class,() -> {
             sut.delete();
@@ -81,7 +80,7 @@ class MyHeapMaxTest {
 
     @Test
     void testToString() {
-        MyHeapMax<Integer> sut = new MyHeapMax<>(12);
+        MyHeap<Integer> sut = new MyHeapMax<>(12);
         try{
             sut.insert(0);
             sut.insert(1);
@@ -106,7 +105,7 @@ class MyHeapMaxTest {
 
     @Test
     void size() {
-        MyHeapMax<Integer> sut = new MyHeapMax<>(6);
+        MyHeap<Integer> sut = new MyHeapMax<>(6);
         //Cuando está vacío
         assertEquals(0,sut.size());
         //Cuando se inserta 1
@@ -129,7 +128,7 @@ class MyHeapMaxTest {
 
     @Test
     void isEmpty() {
-        MyHeapMax<Integer> sut = new MyHeapMax<>(6);
+        MyHeap<Integer> sut = new MyHeapMax<>(6);
         assertTrue(sut.isEmpty());
         try{
             sut.insert(0);
@@ -139,5 +138,15 @@ class MyHeapMaxTest {
             sut.delete();
         }catch (EmptyHeapException e){}
         assertTrue(sut.isEmpty());
+    }
+
+    @Test
+    void top(){
+        MyHeap<Integer> sut = new MyHeapMax<>(10);
+        assertNull(sut.top());
+        try{
+            sut.insert(9);
+        }catch (HeapOverflow e){}
+        assertEquals(9,sut.top());
     }
 }

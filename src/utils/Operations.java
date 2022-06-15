@@ -38,7 +38,7 @@ public class Operations {
         for(int i = 0; i < breweriesInYear.getBuckets().length; i++){
             if(breweriesInYear.getBuckets()[i] != null){
                 if(isFull){
-                    if(top10.min().compareTo(breweriesInYear.getBuckets()[i].getValue()) < 0){
+                    if(top10.top().compareTo(breweriesInYear.getBuckets()[i].getValue()) < 0){
                         try {
                             top10.delete();
                         }catch (EmptyHeapException e){
@@ -101,7 +101,7 @@ public class Operations {
         for(int i = 0; i < users.length; i++){
             if(users[i] != null){
                 if(isFull){
-                    if(users[i].getValue().getReviewIDs().getSize() > top15.min().getQuantity()){
+                    if(users[i].getValue().getReviewIDs().getSize() > top15.top().getQuantity()){
                         try {
                             top15.delete();
                         } catch (EmptyHeapException e) {
@@ -153,7 +153,7 @@ public class Operations {
     public static void reviewsBetweenDates(Bucket<Long, Review>[] reviews, Date initial, Date last){
         long startTime = System.currentTimeMillis();
         int reviewsInRange = 0;
-        SimpleDateFormat formatDate = new SimpleDateFormat("DD-MM-yyyy");
+        SimpleDateFormat formatDate = new SimpleDateFormat("dd-MM-yyyy");
         Date reviewDate;
         for(int i = 0;i < reviews.length; i++){
             if(reviews[i] != null){
@@ -176,7 +176,6 @@ public class Operations {
         System.out.print(timeSpent);
         System.out.println("ms");
     }
-
     public static void top7BeerStyles(Bucket<Long, Review>[] reviews){
         long startTime = System.currentTimeMillis();
         MyClosedHash<String, StyleArome> stylesRated = new MyClosedHash<>(1000);
@@ -201,7 +200,7 @@ public class Operations {
             if(stylesRated.getBuckets()[i] != null){
                 if(isFull){
                     stylesRated.getBuckets()[i].getValue().calculateAverage();
-                    if(top7.min().compareTo(stylesRated.getBuckets()[i].getValue()) < 0){
+                    if(top7.top().compareTo(stylesRated.getBuckets()[i].getValue()) < 0){
                         try {
                             top7.delete();
                         }catch (EmptyHeapException e){
@@ -261,7 +260,7 @@ public class Operations {
         for(int i = 0; i < beers.length; i++){
             if(beers[i] != null){
                 if(isFull){
-                    if(top5.min().getQuantity() < beers[i].getValue().getReviewIDs().size()){
+                    if(top5.top().getQuantity() < beers[i].getValue().getReviewIDs().size()){
                         try {
                             top5.delete();
                         } catch (EmptyHeapException e) {

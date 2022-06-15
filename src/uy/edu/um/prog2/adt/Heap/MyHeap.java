@@ -5,6 +5,7 @@ public interface MyHeap<T extends Comparable<T>> {
     T delete() throws EmptyHeapException;
     int size();
     boolean isEmpty();
-    //String toString();
+    String toString();
+    T top();
 
 }

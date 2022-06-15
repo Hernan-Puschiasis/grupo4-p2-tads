@@ -1,4 +1,5 @@
 import uy.edu.um.prog2.adt.BSTree.BSTree;
+import uy.edu.um.prog2.adt.BSTree.MyTree;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -6,7 +7,7 @@ class BSTreeTest {
 
     @org.junit.jupiter.api.Test
     void find() {
-        BSTree<Integer,String> sut = new BSTree<Integer, String>();
+        MyTree<Integer,String> sut = new BSTree<Integer, String>();
         //Checkeo cuando está vacío
         assertNull(sut.find(1));
 
@@ -29,7 +30,7 @@ class BSTreeTest {
 
     @org.junit.jupiter.api.Test
     void insert() {
-        BSTree<Integer,String> sut = new BSTree<Integer, String>();
+        MyTree<Integer,String> sut = new BSTree<Integer, String>();
         //Checkeo común
         sut.insert(3,"a3");
         sut.insert(5,"a5");
@@ -46,7 +47,7 @@ class BSTreeTest {
 
     @org.junit.jupiter.api.Test
     void delete() {
-        BSTree<Integer,String> sut = new BSTree<Integer, String>();
+        MyTree<Integer,String> sut = new BSTree<Integer, String>();
         //Borrar solo root
         sut.insert(3,"a3");
         sut.delete(3);
@@ -123,7 +124,7 @@ class BSTreeTest {
 
     @org.junit.jupiter.api.Test
     void size() {
-        BSTree<Integer,String> sut = new BSTree<Integer, String>();
+        MyTree<Integer,String> sut = new BSTree<Integer, String>();
         //Checkeo vacío
         assertEquals(0,sut.size());
 
@@ -148,27 +149,4 @@ class BSTreeTest {
 
     }
 
-    @org.junit.jupiter.api.Test
-    void countLeaf() {
-    }
-
-    @org.junit.jupiter.api.Test
-    void countCompleteElements() {
-    }
-
-    @org.junit.jupiter.api.Test
-    void preOrder() {
-    }
-
-    @org.junit.jupiter.api.Test
-    void postOrder() {
-    }
-
-    @org.junit.jupiter.api.Test
-    void inOrder() {
-    }
-
-    @org.junit.jupiter.api.Test
-    void recorrerPorNivel() {
-    }
 }

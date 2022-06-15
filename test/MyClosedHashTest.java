@@ -1,5 +1,6 @@
 import org.junit.jupiter.api.Test;
 import uy.edu.um.prog2.adt.Hash.MyClosedHash;
+import uy.edu.um.prog2.adt.Hash.MyHash;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -7,7 +8,7 @@ class MyClosedHashTest {
 
     @Test
     void put() {
-        MyClosedHash<String,String>  sut = new MyClosedHash<String,String>(5);
+        MyHash<String,String> sut = new MyClosedHash<String,String>(5);
         //Agregando normal
         sut.put("1","1");
         sut.put("2","2");
@@ -24,7 +25,7 @@ class MyClosedHashTest {
 
     @Test
     void get() {
-        MyClosedHash<String,String>  sut = new MyClosedHash<String,String>(5);
+        MyHash<String,String>  sut = new MyClosedHash<String,String>(5);
         //Agregando normal
         sut.put("1","1");
         sut.put("2","2");
@@ -45,7 +46,7 @@ class MyClosedHashTest {
 
     @Test
     void delete() {
-        MyClosedHash<String,String>  sut = new MyClosedHash<String,String>(5);
+        MyHash<String,String>  sut = new MyClosedHash<String,String>(5);
         //Agregando normal
         sut.put("1","1");
         sut.put("6","6");
@@ -59,7 +60,7 @@ class MyClosedHashTest {
 
     @Test
     void size() {
-        MyClosedHash<String,String>  sut = new MyClosedHash<String,String>(5);
+        MyHash<String,String>  sut = new MyClosedHash<String,String>(5);
         //Vacío
         assertEquals(0,sut.size());
         //Agregando normal
@@ -82,7 +83,7 @@ class MyClosedHashTest {
 
     @Test
     void resize() {
-        MyClosedHash<String,String>  sut = new MyClosedHash<String,String>(5);
+        MyHash<String,String>  sut = new MyClosedHash<String,String>(5);
         sut.put("1","1");
         sut.put("2","2");
         sut.put("3","3");
@@ -103,7 +104,7 @@ class MyClosedHashTest {
 
     @Test
     void inHash(){
-        MyClosedHash<String,String>  sut = new MyClosedHash<String,String>(5);
+        MyHash<String,String>  sut = new MyClosedHash<String,String>(5);
         assertFalse(sut.inHash("1"));
         sut.put("1","3");
         assertFalse(sut.inHash("2"));

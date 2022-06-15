@@ -1,5 +1,6 @@
 import org.junit.jupiter.api.Test;
 import uy.edu.um.prog2.adt.Queue.EmptyQueueException;
+import uy.edu.um.prog2.adt.Queue.MyQueue;
 import uy.edu.um.prog2.adt.Queue.QueueTwoPointers;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -8,7 +9,7 @@ class QueueTwoPointersTest {
 
     @Test
     void enqueue() {
-        QueueTwoPointers<String> sut = new QueueTwoPointers<>();
+        MyQueue<String> sut = new QueueTwoPointers<>();
         sut.enqueue("1");
         sut.enqueue("2");
         sut.enqueue("3");
@@ -28,7 +29,7 @@ class QueueTwoPointersTest {
 
     @Test
     void dequeue() {
-        QueueTwoPointers<String> sut = new QueueTwoPointers<>();
+        MyQueue<String> sut = new QueueTwoPointers<>();
         Exception exception = assertThrows(EmptyQueueException.class,() -> {
             sut.dequeue();
         });
@@ -53,7 +54,7 @@ class QueueTwoPointersTest {
 
     @Test
     void isEmpty() {
-        QueueTwoPointers<String> sut = new QueueTwoPointers<>();
+        MyQueue<String> sut = new QueueTwoPointers<>();
         assertTrue(sut.isEmpty());
         sut.enqueue("1");
         assertFalse(sut.isEmpty());
@@ -71,10 +72,9 @@ class QueueTwoPointersTest {
         }catch (EmptyQueueException e){}
     }
 
-
     @Test
     void getSize() {
-        QueueTwoPointers<String> sut = new QueueTwoPointers<>();
+        MyQueue<String> sut = new QueueTwoPointers<>();
         assertEquals(0,sut.getSize());
         sut.enqueue("1");
         assertEquals(1,sut.getSize());

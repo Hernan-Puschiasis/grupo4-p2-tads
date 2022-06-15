@@ -5,7 +5,6 @@ import java.io.FileReader;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Scanner;
-
 import static utils.uploadEntities.*;
 import static utils.Operations.*;
 
@@ -17,7 +16,7 @@ public class Main {
     public MyClosedHash<Long, Review> reviews = new MyClosedHash<>(10000);
     public MyClosedHash<String,Style> styles = new MyClosedHash<>(10000);
     private static String input = "-1";
-    private static final Scanner myObj = new Scanner(System.in);  // Crea un objeto Scanner.
+    private static final Scanner myObj = new Scanner(System.in);
 
 
     public static void main(String[] args) {
@@ -62,7 +61,7 @@ public class Main {
                 case "1":
                     main.uploadData();
                     System.out.println("Carga completa.");
-                    main.submenu(main);
+                    main.submenu(main,input);
                     break;
 
                 default:
@@ -71,8 +70,7 @@ public class Main {
         }
     }
 
-    public void submenu(Main main){
-
+    public void submenu(Main main,String input){
         while(!input.equals("6")){
             System.out.println("Ingrese el número de consulta que desea realizar:");
             System.out.println("1- Top 10 casas de cervezas.");
@@ -100,12 +98,14 @@ public class Main {
                     break;
 
                 case "3":
-                    SimpleDateFormat formatDate = new SimpleDateFormat("DD-MM-yyyy");
+                    SimpleDateFormat formatDate = new SimpleDateFormat("dd-MM-yyyy");
+                    formatDate.setLenient(false);
                     try {
-                        System.out.println("Ingrese una fecha inicio: DD-MM-yyyy");
+                        System.out.println("Ingrese una fecha inicio: dd-MM-yyyy");
                         String newDate = myObj.next();
-                        System.out.println("Ingrese una fecha final: DD-MM-yyyy");
+                        System.out.println("Ingrese una fecha final: dd-MM-yyyy");
                         String finalDate = myObj.next();
+
                         if(formatDate.parse(finalDate).before(formatDate.parse(newDate))){
                             System.out.println("Error en las fechas. Ingrese de nuevo");
                         }
@@ -134,5 +134,7 @@ public class Main {
 
             }
         }
+        input = "1";
     }
+
 }

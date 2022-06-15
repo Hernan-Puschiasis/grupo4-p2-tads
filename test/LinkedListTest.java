@@ -1,6 +1,7 @@
 import org.junit.jupiter.api.Test;
 import uy.edu.um.prog2.adt.LinkedList.LinkedList;
 import uy.edu.um.prog2.adt.LinkedList.ListIndexOutOfRange;
+import uy.edu.um.prog2.adt.LinkedList.MyLinkedList;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -8,7 +9,7 @@ class LinkedListTest {
 
     @Test
     void add() {
-        LinkedList<Integer> sut = new LinkedList<>(); // test de add para LinkedList primera posición
+        MyLinkedList<Integer> sut = new LinkedList<>(); // test de add para LinkedList primera posición
         try{
             sut.add(1);
             sut.add(2);
@@ -23,7 +24,7 @@ class LinkedListTest {
 
     @Test
     void remove() {
-        LinkedList<Integer> sut = new LinkedList<>();
+        MyLinkedList<Integer> sut = new LinkedList<>();
         //Cuando está vacía
         Exception exception = assertThrows(ListIndexOutOfRange.class,() -> {
             sut.remove(0);
@@ -103,7 +104,7 @@ class LinkedListTest {
 
     @Test
     void get() {
-        LinkedList<Integer> sut = new LinkedList<>();
+        MyLinkedList<Integer> sut = new LinkedList<>();
         //Cuando está vacío
         Exception exception = assertThrows(ListIndexOutOfRange.class,() -> {
             sut.get(0);
@@ -154,7 +155,7 @@ class LinkedListTest {
 
     @Test
     void removeValue() {
-        LinkedList<String> sut = new LinkedList<>();
+        MyLinkedList<String> sut = new LinkedList<>();
         try{
             //Cuando está vacío
             sut.removeValue("Hola");
@@ -186,7 +187,7 @@ class LinkedListTest {
 
     @Test
     void inList() {
-        LinkedList<String> sut = new LinkedList<>();
+        MyLinkedList<String> sut = new LinkedList<>();
         //Cuando está vacía
         assertFalse(sut.inList("A"));
         //Cuando hay un elemento
@@ -209,7 +210,7 @@ class LinkedListTest {
 
     @Test
     void addFirst() {
-        LinkedList<Integer> sut = new LinkedList<>();
+        MyLinkedList<Integer> sut = new LinkedList<>();
         try{
             //Agregar vacío
             sut.addFirst(20);
@@ -236,7 +237,7 @@ class LinkedListTest {
 
     @Test
     void getSize() {
-        LinkedList<String> sut = new LinkedList<>();
+        MyLinkedList<String> sut = new LinkedList<>();
         try{
             //Cuando está vacío
             assertEquals(0,sut.getSize());

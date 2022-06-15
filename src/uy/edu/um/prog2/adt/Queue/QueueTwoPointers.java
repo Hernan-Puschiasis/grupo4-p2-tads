@@ -40,17 +40,6 @@ public class QueueTwoPointers<T> implements MyQueue<T> {
         return head == null;
     }
 
-    public void visualizar(){
-        Nodo<T> currentNodo = head;
-        while(currentNodo.getNext() != null){
-            System.out.print(currentNodo.getValue());
-            System.out.print(" ");
-            currentNodo = currentNodo.getNext();
-        }
-        System.out.println(currentNodo.getValue());
-
-    }
-
     public int getSize(){
         return size;
     }

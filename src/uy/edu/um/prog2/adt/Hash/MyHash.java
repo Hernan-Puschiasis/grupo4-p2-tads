@@ -5,4 +5,6 @@ public interface MyHash<K,V>{
     V get(K key);
     void delete(K key);
     int size();
+    boolean inHash(K key);
+    Bucket<K, V>[] getBuckets();
 }

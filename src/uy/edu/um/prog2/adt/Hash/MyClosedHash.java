@@ -95,9 +95,11 @@ public class MyClosedHash<K,V> implements MyHash<K,V> {
         return occupied;
     }
 
+    @Override
     public boolean inHash(K key){
         return !(this.get(key) == null);
     }
+
     public void resize(){
         MyClosedHash<K,V> newHash = new MyClosedHash<>(2 * size);
         for(int i = 0; i < size; i++){

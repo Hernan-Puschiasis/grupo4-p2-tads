@@ -1,13 +1,14 @@
 import org.junit.jupiter.api.Test;
 import uy.edu.um.prog2.adt.ArrayList.ArrayList;
 import uy.edu.um.prog2.adt.ArrayList.IndexOutOfRangeException;
+import uy.edu.um.prog2.adt.ArrayList.MyArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class ArrayListTest {
     @Test
     void add() {
-        ArrayList<String> sut = new ArrayList<>(5);
+        MyArrayList<String> sut = new ArrayList<>(5);
         sut.add("a");
         sut.add("b");
         sut.add("c");
@@ -27,7 +28,7 @@ class ArrayListTest {
 
     @Test
     void get() {
-        ArrayList<String> sut = new ArrayList<>(5);
+        MyArrayList<String> sut = new ArrayList<>(5);
         sut.add("a");
         sut.add("b");
         sut.add("c");
@@ -52,7 +53,7 @@ class ArrayListTest {
 
     @Test
     void size() {
-        ArrayList<String> sut = new ArrayList<>(5);
+        MyArrayList<String> sut = new ArrayList<>(5);
         assertEquals(0,sut.size());
         sut.add("a");
         assertEquals(1,sut.size());

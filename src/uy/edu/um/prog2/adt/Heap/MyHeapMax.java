@@ -99,6 +99,7 @@ public class MyHeapMax<T extends Comparable<T>> implements MyHeap<T>{
 
         return max;
     }
+
     private T max(T value1,T value2){
         if(value1.compareTo(value2) < 0){
             return value2;
@@ -108,6 +109,7 @@ public class MyHeapMax<T extends Comparable<T>> implements MyHeap<T>{
         }
     }
 
+    @Override
     public String toString(){
         String heapString = "";
         int level = 0;
@@ -124,6 +126,17 @@ public class MyHeapMax<T extends Comparable<T>> implements MyHeap<T>{
         }
         return heapString;
     }
+
+    @Override
+    public T top() {
+        if(values[0] != null) {
+            return values[0];
+        }
+        else{
+            return null;
+        }
+    }
+
     @Override
     public int size() {
         return heapSize;

@@ -132,7 +132,13 @@ public class MyHeapMin<T extends Comparable<T>> implements MyHeap<T>{
         return heapSize == 0;
     }
 
-    public T min(){
-        return values[0];
+    @Override
+    public T top(){
+        if(values[0] != null) {
+            return values[0];
+        }
+        else{
+            return null;
+        }
     }
 }

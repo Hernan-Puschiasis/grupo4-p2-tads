@@ -1,5 +1,6 @@
 import org.junit.jupiter.api.Test;
 import uy.edu.um.prog2.adt.Stack.EmptyStackException;
+import uy.edu.um.prog2.adt.Stack.MyStack;
 import uy.edu.um.prog2.adt.Stack.Stack;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -8,7 +9,7 @@ class StackTest {
 
     @Test
     void pop() {
-        Stack<String> sut = new Stack<String>();
+        MyStack<String> sut = new Stack<String>();
         Exception exception = assertThrows(EmptyStackException.class,() -> {
             sut.pop();
         });
@@ -30,7 +31,7 @@ class StackTest {
 
     @Test
     void top() {
-        Stack<String> sut = new Stack<String>();
+        MyStack<String> sut = new Stack<String>();
         Exception exception = assertThrows(EmptyStackException.class,() -> {
             sut.top();
         });
@@ -47,7 +48,7 @@ class StackTest {
 
     @Test
     void push() {
-        Stack<String> sut = new Stack<String>();
+        MyStack<String> sut = new Stack<String>();
         try{
             sut.push("1");
             assertEquals("1",sut.top());
@@ -60,7 +61,7 @@ class StackTest {
 
     @Test
     void isEmpty() {
-        Stack<String> sut = new Stack<String>();
+        MyStack<String> sut = new Stack<String>();
         assertTrue(sut.isEmpty());
         sut.push("1");
         assertFalse(sut.isEmpty());
@@ -73,7 +74,7 @@ class StackTest {
 
     @Test
     void makeEmpty() {
-        Stack<String> sut = new Stack<String>();
+        MyStack<String> sut = new Stack<String>();
         sut.push("1");
         sut.push("2");
         sut.push("3");

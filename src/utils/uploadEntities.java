@@ -17,8 +17,7 @@ public class uploadEntities {
             users.put(line[7],newUser);
         }
     }
-    //Preguntar si se identifica solo por id o si necesita también de la id de la brewery
-    //Preguntar si es mejor guardar en variable o hacer el parseLong a cada rato
+
     public static void addBeer(MyClosedHash<Long, Beer> beers, String[] line){
         if(beers.inHash(Long.parseLong(line[13]))){
             beers.get(Long.parseLong(line[13])).addReview(Long.parseLong(line[0]));
@@ -31,7 +30,6 @@ public class uploadEntities {
         }
     }
 
-    //En consulta 1, guardar en un hash las breweries e ir contando
     public static void addBrewery(MyClosedHash<Long, Brewery> breweries, String[] line){
         if(breweries.inHash(Long.parseLong(line[1]))){
             breweries.get(Long.parseLong(line[1])).addReview(Long.parseLong(line[0]));
