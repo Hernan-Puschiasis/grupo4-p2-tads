@@ -4,9 +4,9 @@ import uy.edu.um.prog2.adt.ArrayList.ArrayList;
 import uy.edu.um.prog2.adt.LinkedList.LinkedList;
 
 public class Beer {
-    long id;
-    String name;
-    double abv;
+    private long id;
+    private String name;
+    private double abv;
     ArrayList<Long> reviewIDs = new ArrayList<>(100);
     Style style;
 

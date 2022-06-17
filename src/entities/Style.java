@@ -4,7 +4,7 @@ import uy.edu.um.prog2.adt.ArrayList.ArrayList;
 import uy.edu.um.prog2.adt.LinkedList.LinkedList;
 
 public class Style {
-    String name;
+    private String name;
     LinkedList<Long> beers = new LinkedList<>();
     ArrayList<Long>  reviewsAsociated = new ArrayList<>(100);
     public Style(String name){
@@ -16,5 +16,4 @@ public class Style {
     }
 
     public void addReview(long reviewID){reviewsAsociated.add(reviewID);}
-
 }

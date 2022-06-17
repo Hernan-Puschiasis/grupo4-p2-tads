@@ -3,8 +3,8 @@ package entities;
 import uy.edu.um.prog2.adt.LinkedList.LinkedList;
 
 public class Brewery {
-    long id;
-    String name;
+    private long id;
+    private String name;
     LinkedList<Long> reviewIDs = new LinkedList<>();
     //TODO: capaz tiene que ser un set LinkedList<Long> beers = new LinkedList<>();
 
