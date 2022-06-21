@@ -2,12 +2,13 @@ package utils;
 
 import entities.*;
 import uy.edu.um.prog2.adt.Hash.MyClosedHash;
+import uy.edu.um.prog2.adt.Hash.MyHash;
 
 import java.time.Instant;
 import java.util.Date;
 
 public class uploadEntities {
-    public static void addUser(MyClosedHash<String, User>  users, String[] line){
+    public static void addUser(MyHash<String, User> users, String[] line){
         if(users.inHash(line[7])){
             users.get(line[7]).addReview(Long.parseLong(line[0]));
         }
@@ -18,7 +19,7 @@ public class uploadEntities {
         }
     }
 
-    public static void addBeer(MyClosedHash<Long, Beer> beers, String[] line){
+    public static void addBeer(MyHash<Long, Beer> beers, String[] line){
         if(beers.inHash(Long.parseLong(line[13]))){
             beers.get(Long.parseLong(line[13])).addReview(Long.parseLong(line[0]));
         }
@@ -30,7 +31,7 @@ public class uploadEntities {
         }
     }
 
-    public static void addBrewery(MyClosedHash<Long, Brewery> breweries, String[] line){
+    public static void addBrewery(MyHash<Long, Brewery> breweries, String[] line){
         if(breweries.inHash(Long.parseLong(line[1]))){
             breweries.get(Long.parseLong(line[1])).addReview(Long.parseLong(line[0]));
         }
@@ -41,7 +42,7 @@ public class uploadEntities {
         }
     }
 
-    public static void addReview(MyClosedHash<Long, Review> reviews, String[] line){
+    public static void addReview(MyHash<Long, Review> reviews, String[] line){
         Instant newInstant = Instant.ofEpochSecond(Long.parseLong(line[3]));
         Date newDate = Date.from(newInstant);
         Review newReview = new Review(Long.parseLong(line[0]),newDate,Double.parseDouble(line[4]),
@@ -50,7 +51,7 @@ public class uploadEntities {
         reviews.put(Long.parseLong(line[0]),newReview);
     }
 
-    public static void addStyle(MyClosedHash<String, Style> styles, String[] line){
+    public static void addStyle(MyHash<String, Style> styles, String[] line){
         if(styles.inHash(line[8])){
             styles.get(line[8]).addBeer(Long.parseLong(line[13]));
         }

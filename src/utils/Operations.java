@@ -7,6 +7,7 @@ import auxiliarEntities.UserReviewsQuantity;
 import entities.*;
 import uy.edu.um.prog2.adt.Hash.Bucket;
 import uy.edu.um.prog2.adt.Hash.MyClosedHash;
+import uy.edu.um.prog2.adt.Hash.MyHash;
 import uy.edu.um.prog2.adt.Heap.EmptyHeapException;
 import uy.edu.um.prog2.adt.Heap.HeapOverflow;
 import uy.edu.um.prog2.adt.Heap.MyHeapMin;
@@ -16,7 +17,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Operations {
-    public static void top10Breweries(MyClosedHash<Long, Brewery> breweriesHash, Bucket<Long, Review>[] reviews,String year){
+    public static void top10Breweries(MyHash<Long, Brewery> breweriesHash, Bucket<Long, Review>[] reviews, String year){
         long startTime = System.currentTimeMillis();
         Bucket<Long, Brewery>[] breweries = breweriesHash.getBuckets();
         SimpleDateFormat formatDate = new SimpleDateFormat("yyyy");
@@ -251,7 +252,7 @@ public class Operations {
         System.out.print(timeSpent);
         System.out.println("ms");
     }
-    public static void top5Beers(MyClosedHash<Long, Beer> beerHash, MyClosedHash<Long, Review> reviews){
+    public static void top5Beers(MyHash<Long, Beer> beerHash, MyHash<Long, Review> reviews){
         long startTime = System.currentTimeMillis();
         Bucket<Long,Beer>[] beers = beerHash.getBuckets();
         MyHeapMin<BeerReviewsQuantity> top5 = new MyHeapMin<>(5);

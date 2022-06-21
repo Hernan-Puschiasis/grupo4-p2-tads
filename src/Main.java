@@ -1,6 +1,8 @@
 import com.opencsv.CSVReader;
 import entities.*;
 import uy.edu.um.prog2.adt.Hash.MyClosedHash;
+import uy.edu.um.prog2.adt.Hash.MyHash;
+
 import java.io.FileReader;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -10,11 +12,11 @@ import static utils.Operations.*;
 
 
 public class Main {
-    public MyClosedHash<String, User> users = new MyClosedHash<String,User>(10000);
-    public MyClosedHash<Long, Beer> beers = new MyClosedHash<>(10000);
-    public MyClosedHash<Long, Brewery> breweries = new MyClosedHash<>(10000);
-    public MyClosedHash<Long, Review> reviews = new MyClosedHash<>(10000);
-    public MyClosedHash<String,Style> styles = new MyClosedHash<>(10000);
+    public MyHash<String, User> users = new MyClosedHash<String,User>(50000);
+    public MyHash<Long, Beer> beers = new MyClosedHash<>(70000);
+    public MyHash<Long, Brewery> breweries = new MyClosedHash<>(7000);
+    public MyHash<Long, Review> reviews = new MyClosedHash<>(2100000);
+    public MyHash<String,Style> styles = new MyClosedHash<>(200);
     private static String input = "-1";
     private static final Scanner myObj = new Scanner(System.in);
 
@@ -27,7 +29,7 @@ public class Main {
     public void uploadData(){
         long startTime = System.currentTimeMillis();
         try{
-            FileReader reader = new FileReader("src/beer_dataset_test.csv");
+            FileReader reader = new FileReader("src/beer_dataset_full.csv");
             CSVReader csvReader = new CSVReader(reader);
             String[] line = csvReader.readNext();
             while ((line = csvReader.readNext()) != null) {
