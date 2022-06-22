@@ -1,12 +1,12 @@
 package entities;
 
 import uy.edu.um.prog2.adt.LinkedList.LinkedList;
+import uy.edu.um.prog2.adt.LinkedList.MyLinkedList;
 
 public class Brewery {
     private long id;
     private String name;
-    LinkedList<Long> reviewIDs = new LinkedList<>();
-    //TODO: capaz tiene que ser un set LinkedList<Long> beers = new LinkedList<>();
+    MyLinkedList<Long> reviewIDs = new LinkedList<>();
 
     public Brewery(long id, String name){
         this.id = id;
@@ -24,6 +24,6 @@ public class Brewery {
     }
 
     public LinkedList<Long> getReviewIDs() {
-        return reviewIDs;
+        return (LinkedList<Long>) reviewIDs;
     }
 }

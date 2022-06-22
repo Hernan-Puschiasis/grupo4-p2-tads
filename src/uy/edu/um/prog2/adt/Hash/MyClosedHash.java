@@ -1,14 +1,19 @@
 package uy.edu.um.prog2.adt.Hash;
 
+import uy.edu.um.prog2.adt.ArrayList.ArrayList;
+import uy.edu.um.prog2.adt.ArrayList.MyArrayList;
+
 public class MyClosedHash<K,V> implements MyHash<K,V> {
     Bucket<K,V>[] buckets;
     int size;
     int occupied = 0;
+    MyArrayList<K> keys;
 
     @SuppressWarnings("unchecked")
     public MyClosedHash(int size) {
         this.size = size;
         buckets = new Bucket[size];
+        keys = new ArrayList<>(size);
     }
 
     @Override
@@ -19,12 +24,14 @@ public class MyClosedHash<K,V> implements MyHash<K,V> {
             if (buckets[function(key,counter)] == null) {
                 Bucket<K,V> newBucket = new Bucket<>(key,value);
                 buckets[function(key,counter)] = newBucket;
+                keys.add(key);
                 is_put = true;
             }
             else if(buckets[function(key,counter)].isDeleted()){
                 buckets[function(key,counter)].setKey(key);
                 buckets[function(key,counter)].setValue(value);
                 buckets[function(key,counter)].setDeleted(false);
+                keys.add(key);
                 is_put = true;
             }
             else if(buckets[function(key,counter)].getKey().equals(key)){
@@ -100,7 +107,7 @@ public class MyClosedHash<K,V> implements MyHash<K,V> {
         return !(this.get(key) == null);
     }
 
-    public void resize(){
+    private void resize(){
         MyClosedHash<K,V> newHash = new MyClosedHash<>(2 * size);
         for(int i = 0; i < size; i++){
             if (buckets[i] != null) {
@@ -111,7 +118,12 @@ public class MyClosedHash<K,V> implements MyHash<K,V> {
         buckets = newHash.getBuckets();
     }
 
-    public Bucket<K, V>[] getBuckets() {
+    @Override
+    public ArrayList<K> getKeys() {
+        return (ArrayList<K>) keys;
+    }
+
+    private Bucket<K, V>[] getBuckets() {
         return buckets;
     }
 

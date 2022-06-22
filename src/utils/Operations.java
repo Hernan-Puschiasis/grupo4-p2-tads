@@ -10,6 +10,7 @@ import uy.edu.um.prog2.adt.Hash.MyClosedHash;
 import uy.edu.um.prog2.adt.Hash.MyHash;
 import uy.edu.um.prog2.adt.Heap.EmptyHeapException;
 import uy.edu.um.prog2.adt.Heap.HeapOverflow;
+import uy.edu.um.prog2.adt.Heap.MyHeap;
 import uy.edu.um.prog2.adt.Heap.MyHeapMin;
 
 import java.text.ParseException;
@@ -17,53 +18,50 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Operations {
-    public static void top10Breweries(MyHash<Long, Brewery> breweriesHash, Bucket<Long, Review>[] reviews, String year){
+    public static void top10Breweries(MyHash<Long, Brewery> breweriesHash, MyHash<Long, Review> reviews, String year){
         long startTime = System.currentTimeMillis();
-        Bucket<Long, Brewery>[] breweries = breweriesHash.getBuckets();
         SimpleDateFormat formatDate = new SimpleDateFormat("yyyy");
-        MyClosedHash<Long, BreweryQuantity> breweriesInYear = new MyClosedHash<>(1000);
-        for(int i = 0; i < reviews.length; i++){
-            if(reviews[i] != null && formatDate.format(reviews[i].getValue().getDate()).equals(year)){
-                if(breweriesInYear.inHash(reviews[i].getValue().getBrewery_id())){
-                    breweriesInYear.get(reviews[i].getValue().getBrewery_id()).addQuantity();
+        MyHash<Long, BreweryQuantity> breweriesInYear = new MyClosedHash<>(1000);
+        for(int i = 0; i < reviews.getKeys().size(); i++){
+            if(formatDate.format(reviews.get(reviews.getKeys().get(i)).getDate()).equals(year)){
+                if(breweriesInYear.inHash(reviews.get(reviews.getKeys().get(i)).getBrewery_id())){
+                    breweriesInYear.get(reviews.get(reviews.getKeys().get(i)).getBrewery_id()).addQuantity();
                 }
                 else{
-                    breweriesInYear.put(reviews[i].getValue().getBrewery_id(),new BreweryQuantity(reviews[i].getValue().getBrewery_id()));
+                    breweriesInYear.put(reviews.get(reviews.getKeys().get(i)).getBrewery_id(),new BreweryQuantity(reviews.get(reviews.getKeys().get(i)).getBrewery_id()));
                 }
             }
         }
 
-        MyHeapMin<BreweryQuantity> top10 = new MyHeapMin<>(10);
+        MyHeap<BreweryQuantity> top10 = new MyHeapMin<>(10);
         int counter = 0;
         boolean isFull = false;
-        for(int i = 0; i < breweriesInYear.getBuckets().length; i++){
-            if(breweriesInYear.getBuckets()[i] != null){
-                if(isFull){
-                    if(top10.top().compareTo(breweriesInYear.getBuckets()[i].getValue()) < 0){
-                        try {
-                            top10.delete();
-                        }catch (EmptyHeapException e){
-                            e.printStackTrace();
-                        }
-                        try{
-                            top10.insert(breweriesInYear.getBuckets()[i].getValue());
-                        }catch (HeapOverflow e){
-                            e.printStackTrace();
-                        }
+        for(int i = 0; i < breweriesInYear.getKeys().size(); i++){
+            if(isFull){
+                if(top10.top().compareTo(breweriesInYear.get(breweriesInYear.getKeys().get(i))) < 0){
+                    try {
+                        top10.delete();
+                    }catch (EmptyHeapException e){
+                        e.printStackTrace();
                     }
-                }
-                else{
                     try{
-                        top10.insert(breweriesInYear.getBuckets()[i].getValue());
-                        counter++;
-                        if(counter == 10){
-                            isFull = true;
-                        }
+                        top10.insert(breweriesInYear.get(breweriesInYear.getKeys().get(i)));
                     }catch (HeapOverflow e){
                         e.printStackTrace();
                     }
-
                 }
+            }
+            else{
+                try{
+                    top10.insert(breweriesInYear.get(breweriesInYear.getKeys().get(i)));
+                    counter++;
+                    if(counter == 10){
+                        isFull = true;
+                    }
+                }catch (HeapOverflow e){
+                    e.printStackTrace();
+                }
+
             }
         }
         BreweryQuantity[] breweriesTop10 = new BreweryQuantity[top10.size()];
@@ -94,37 +92,35 @@ public class Operations {
 
 
     }
-    public static void top15Users(Bucket<String, User>[] users){
+    public static void top15Users(MyHash<String, User> users){
         long startTime = System.currentTimeMillis();
-        MyHeapMin<UserReviewsQuantity> top15 = new MyHeapMin<>(15);
+        MyHeap<UserReviewsQuantity> top15 = new MyHeapMin<>(15);
         boolean isFull = false;
         int counter = 0;
-        for(int i = 0; i < users.length; i++){
-            if(users[i] != null){
-                if(isFull){
-                    if(users[i].getValue().getReviewIDs().getSize() > top15.top().getQuantity()){
-                        try {
-                            top15.delete();
-                        } catch (EmptyHeapException e) {
-                            e.printStackTrace();
-                        }
-                        try {
-                            top15.insert(new UserReviewsQuantity(users[i].getKey(),users[i].getValue().getReviewIDs().getSize()));
-                        } catch (HeapOverflow e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }
-                else{
+        for(int i = 0; i < users.getKeys().size(); i++){
+            if(isFull){
+                if(users.get(users.getKeys().get(i)).getReviewIDs().getSize() > top15.top().getQuantity()){
                     try {
-                        top15.insert(new UserReviewsQuantity(users[i].getKey(),users[i].getValue().getReviewIDs().getSize()));
-                        counter++;
-                        if(counter == 15){
-                            isFull = true;
-                        }
+                        top15.delete();
+                    } catch (EmptyHeapException e) {
+                        e.printStackTrace();
+                    }
+                    try {
+                        top15.insert(new UserReviewsQuantity(users.getKeys().get(i),users.get(users.getKeys().get(i)).getReviewIDs().getSize()));
                     } catch (HeapOverflow e) {
                         e.printStackTrace();
                     }
+                }
+            }
+            else{
+                try {
+                    top15.insert(new UserReviewsQuantity(users.getKeys().get(i),users.get(users.getKeys().get(i)).getReviewIDs().getSize()));
+                    counter++;
+                    if(counter == 15){
+                        isFull = true;
+                    }
+                } catch (HeapOverflow e) {
+                    e.printStackTrace();
                 }
             }
         }
@@ -151,22 +147,19 @@ public class Operations {
         System.out.print(timeSpent);
         System.out.println("ms");
     }
-    public static void reviewsBetweenDates(Bucket<Long, Review>[] reviews, Date initial, Date last){
+    public static void reviewsBetweenDates(MyHash<Long, Review> reviews, Date initial, Date last){
         long startTime = System.currentTimeMillis();
         int reviewsInRange = 0;
         SimpleDateFormat formatDate = new SimpleDateFormat("dd-MM-yyyy");
         Date reviewDate;
-        for(int i = 0;i < reviews.length; i++){
-            if(reviews[i] != null){
-                try {
-                    reviewDate = formatDate.parse(formatDate.format(reviews[i].getValue().getDate()));
-                    if((reviewDate.after(initial) && reviewDate.before(last) || reviewDate.equals(initial) || reviewDate.equals(last))){
-                        reviewsInRange++;
-                    }
-                } catch (ParseException e) {
-                    e.printStackTrace();
+        for(int i = 0;i < reviews.getKeys().size(); i++){
+            try {
+                reviewDate = formatDate.parse(formatDate.format(reviews.get(reviews.getKeys().get(i)).getDate()));
+                if((reviewDate.after(initial) && reviewDate.before(last) || reviewDate.equals(initial) || reviewDate.equals(last))){
+                    reviewsInRange++;
                 }
-
+            } catch (ParseException e) {
+                e.printStackTrace();
             }
         }
         System.out.print("Reviews: ");
@@ -177,56 +170,52 @@ public class Operations {
         System.out.print(timeSpent);
         System.out.println("ms");
     }
-    public static void top7BeerStyles(Bucket<Long, Review>[] reviews){
+    public static void top7BeerStyles(MyHash<Long, Review> reviews){
         long startTime = System.currentTimeMillis();
-        MyClosedHash<String, StyleArome> stylesRated = new MyClosedHash<>(1000);
+        MyHash<String, StyleArome> stylesRated = new MyClosedHash<>(1000);
         StyleArome auxiliarStyleArome;
-        for(int i = 0; i < reviews.length; i++){
-            if(reviews[i] != null){
-                if(stylesRated.inHash(reviews[i].getValue().getStyle())){
-                    stylesRated.get(reviews[i].getValue().getStyle()).addReview(reviews[i].getValue().getAromaScore());
-                }
-                else{
-                    auxiliarStyleArome = new StyleArome(reviews[i].getValue().getStyle());
-                    auxiliarStyleArome.addReview(reviews[i].getValue().getAromaScore());
-                    stylesRated.put(reviews[i].getValue().getStyle(),auxiliarStyleArome);
-                }
+        for(int i = 0; i < reviews.getKeys().size(); i++){
+            if(stylesRated.inHash(reviews.get(reviews.getKeys().get(i)).getStyle())){
+                stylesRated.get(reviews.get(reviews.getKeys().get(i)).getStyle()).addReview(reviews.get(reviews.getKeys().get(i)).getAromaScore());
+            }
+            else{
+                auxiliarStyleArome = new StyleArome(reviews.get(reviews.getKeys().get(i)).getStyle());
+                auxiliarStyleArome.addReview(reviews.get(reviews.getKeys().get(i)).getAromaScore());
+                stylesRated.put(reviews.get(reviews.getKeys().get(i)).getStyle(),auxiliarStyleArome);
             }
         }
 
-        MyHeapMin<StyleArome> top7 = new MyHeapMin<>(7);
+        MyHeap<StyleArome> top7 = new MyHeapMin<>(7);
         int counter = 0;
         boolean isFull = false;
-        for(int i = 0; i < stylesRated.getBuckets().length; i++){
-            if(stylesRated.getBuckets()[i] != null){
-                if(isFull){
-                    stylesRated.getBuckets()[i].getValue().calculateAverage();
-                    if(top7.top().compareTo(stylesRated.getBuckets()[i].getValue()) < 0){
-                        try {
-                            top7.delete();
-                        }catch (EmptyHeapException e){
-                            e.printStackTrace();
-                        }
-                        try{
-                            top7.insert(stylesRated.getBuckets()[i].getValue());
-                        }catch (HeapOverflow e){
-                            e.printStackTrace();
-                        }
+        for(int i = 0; i < stylesRated.getKeys().size(); i++){
+            if(isFull){
+                stylesRated.get(stylesRated.getKeys().get(i)).calculateAverage();
+                if(top7.top().compareTo(stylesRated.get(stylesRated.getKeys().get(i))) < 0){
+                    try {
+                        top7.delete();
+                    }catch (EmptyHeapException e){
+                        e.printStackTrace();
                     }
-                }
-                else{
                     try{
-                        stylesRated.getBuckets()[i].getValue().calculateAverage();
-                        top7.insert(stylesRated.getBuckets()[i].getValue());
-                        counter++;
-                        if(counter == 7){
-                            isFull = true;
-                        }
+                        top7.insert(stylesRated.get(stylesRated.getKeys().get(i)));
                     }catch (HeapOverflow e){
                         e.printStackTrace();
                     }
-
                 }
+            }
+            else{
+                try{
+                    stylesRated.get(stylesRated.getKeys().get(i)).calculateAverage();
+                    top7.insert(stylesRated.get(stylesRated.getKeys().get(i)));
+                    counter++;
+                    if(counter == 7){
+                        isFull = true;
+                    }
+                }catch (HeapOverflow e){
+                    e.printStackTrace();
+                }
+
             }
         }
         StyleArome[] beersTop7 = new StyleArome[top7.size()];
@@ -252,39 +241,36 @@ public class Operations {
         System.out.print(timeSpent);
         System.out.println("ms");
     }
-    public static void top5Beers(MyHash<Long, Beer> beerHash, MyHash<Long, Review> reviews){
+    public static void top5Beers(MyHash<Long, Beer> beers, MyHash<Long, Review> reviews){
         long startTime = System.currentTimeMillis();
-        Bucket<Long,Beer>[] beers = beerHash.getBuckets();
-        MyHeapMin<BeerReviewsQuantity> top5 = new MyHeapMin<>(5);
+        MyHeap<BeerReviewsQuantity> top5 = new MyHeapMin<>(5);
         boolean isFull = false;
         int counter = 0;
-        for(int i = 0; i < beers.length; i++){
-            if(beers[i] != null){
-                if(isFull){
-                    if(top5.top().getQuantity() < beers[i].getValue().getReviewIDs().size()){
-                        try {
-                            top5.delete();
-                        } catch (EmptyHeapException e) {
-                            e.printStackTrace();
-                        }
-                        try {
-                            top5.insert(new BeerReviewsQuantity(beers[i].getKey(),beers[i].getValue().getReviewIDs().size()));
-                        } catch (HeapOverflow e) {
-                            e.printStackTrace();
-                        }
-                    }
-
-                }
-                else{
+        for(int i = 0; i < beers.getKeys().size(); i++){
+            if(isFull){
+                if(top5.top().getQuantity() < beers.get(beers.getKeys().get(i)).getReviewIDs().size()){
                     try {
-                        top5.insert(new BeerReviewsQuantity(beers[i].getKey(),beers[i].getValue().getReviewIDs().size()));
-                        counter++;
-                        if(counter == 5){
-                            isFull = true;
-                        }
+                        top5.delete();
+                    } catch (EmptyHeapException e) {
+                        e.printStackTrace();
+                    }
+                    try {
+                        top5.insert(new BeerReviewsQuantity(beers.getKeys().get(i),beers.get(beers.getKeys().get(i)).getReviewIDs().size()));
                     } catch (HeapOverflow e) {
                         e.printStackTrace();
                     }
+                }
+
+            }
+            else{
+                try {
+                    top5.insert(new BeerReviewsQuantity(beers.getKeys().get(i),beers.get(beers.getKeys().get(i)).getReviewIDs().size()));
+                    counter++;
+                    if(counter == 5){
+                        isFull = true;
+                    }
+                } catch (HeapOverflow e) {
+                    e.printStackTrace();
                 }
             }
         }
@@ -299,13 +285,13 @@ public class Operations {
         }
         for(int i = 0; i < beersTop5.length; i++){
             float beerAvg = 0;
-            for(int j = 0; j < beerHash.get(beersTop5[i].getBeerID()).getReviewIDs().size(); j++){
-                beerAvg += reviews.get(beerHash.get(beersTop5[i].getBeerID()).getReviewIDs().get(j)).getOverallScore();
+            for(int j = 0; j < beers.get(beersTop5[i].getBeerID()).getReviewIDs().size(); j++){
+                beerAvg += reviews.get(beers.get(beersTop5[i].getBeerID()).getReviewIDs().get(j)).getOverallScore();
             }
             System.out.print(i+1);
             System.out.print(", ");
             System.out.print("Beer Name: ");
-            System.out.print(beerHash.get(beersTop5[i].getBeerID()).getName());
+            System.out.print(beers.get(beersTop5[i].getBeerID()).getName());
             System.out.print(", ");
             System.out.print("Reviews: ");
             System.out.print(beersTop5[i].getQuantity());

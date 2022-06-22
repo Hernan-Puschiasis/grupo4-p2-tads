@@ -12,11 +12,11 @@ import static utils.Operations.*;
 
 
 public class Main {
-    public MyHash<String, User> users = new MyClosedHash<String,User>(50000);
-    public MyHash<Long, Beer> beers = new MyClosedHash<>(70000);
-    public MyHash<Long, Brewery> breweries = new MyClosedHash<>(7000);
+    public MyHash<String, User> users = new MyClosedHash<String,User>(80000);
+    public MyHash<Long, Beer> beers = new MyClosedHash<>(80000);
+    public MyHash<Long, Brewery> breweries = new MyClosedHash<>(10000);
     public MyHash<Long, Review> reviews = new MyClosedHash<>(2100000);
-    public MyHash<String,Style> styles = new MyClosedHash<>(200);
+    public MyHash<String,Style> styles = new MyClosedHash<>(1000);
     private static String input = "-1";
     private static final Scanner myObj = new Scanner(System.in);
 
@@ -89,14 +89,14 @@ public class Main {
                         System.out.println("Ingrese un año: ");
                         String newInput = myObj.next();
                         Integer year = Integer.parseInt(newInput);
-                        top10Breweries(breweries, reviews.getBuckets(),newInput);
+                        top10Breweries(breweries, reviews,newInput);
                     }catch (NumberFormatException e){
                         System.out.println("Año erróneo, consulte de nuevo");
                     }
                     break;
 
                 case "2":
-                    top15Users(main.users.getBuckets());
+                    top15Users(main.users);
                     break;
 
                 case "3":
@@ -112,7 +112,7 @@ public class Main {
                             System.out.println("Error en las fechas. Ingrese de nuevo");
                         }
                         else{
-                            reviewsBetweenDates(reviews.getBuckets(),formatDate.parse(newDate),formatDate.parse(finalDate));
+                            reviewsBetweenDates(reviews,formatDate.parse(newDate),formatDate.parse(finalDate));
                         }
                     } catch (ParseException e) {
                         System.out.println("Error en las fechas. Ingrese de nuevo");
@@ -120,7 +120,7 @@ public class Main {
                     break;
 
                 case "4":
-                    top7BeerStyles(reviews.getBuckets());
+                    top7BeerStyles(reviews);
                     break;
 
                 case "5":

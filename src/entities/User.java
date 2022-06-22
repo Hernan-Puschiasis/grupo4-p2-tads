@@ -2,10 +2,11 @@ package entities;
 
 
 import uy.edu.um.prog2.adt.LinkedList.LinkedList;
+import uy.edu.um.prog2.adt.LinkedList.MyLinkedList;
 
 public class User{
     private String username;
-    LinkedList<Long> reviewIDs = new LinkedList<>();
+    MyLinkedList<Long> reviewIDs = new LinkedList<>();
     public User(String username){
         this.username = username;
     }
@@ -15,6 +16,6 @@ public class User{
     }
 
     public LinkedList<Long> getReviewIDs() {
-        return reviewIDs;
+        return (LinkedList<Long>) reviewIDs;
     }
 }

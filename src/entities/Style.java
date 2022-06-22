@@ -1,12 +1,14 @@
 package entities;
 
 import uy.edu.um.prog2.adt.ArrayList.ArrayList;
+import uy.edu.um.prog2.adt.ArrayList.MyArrayList;
 import uy.edu.um.prog2.adt.LinkedList.LinkedList;
+import uy.edu.um.prog2.adt.LinkedList.MyLinkedList;
 
 public class Style {
     private String name;
-    LinkedList<Long> beers = new LinkedList<>();
-    ArrayList<Long>  reviewsAsociated = new ArrayList<>(100);
+    MyLinkedList<Long> beers = new LinkedList<>();
+    MyArrayList<Long> reviewsAsociated = new ArrayList<>(100);
     public Style(String name){
         this.name = name;
     }
