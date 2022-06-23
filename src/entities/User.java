@@ -6,7 +6,7 @@ import uy.edu.um.prog2.adt.LinkedList.MyLinkedList;
 
 public class User{
     private String username;
-    MyLinkedList<Long> reviewIDs = new LinkedList<>();
+    private MyLinkedList<Long> reviewIDs = new LinkedList<>();
     public User(String username){
         this.username = username;
     }

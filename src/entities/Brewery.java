@@ -6,7 +6,7 @@ import uy.edu.um.prog2.adt.LinkedList.MyLinkedList;
 public class Brewery {
     private long id;
     private String name;
-    MyLinkedList<Long> reviewIDs = new LinkedList<>();
+    private MyLinkedList<Long> reviewIDs = new LinkedList<>();
 
     public Brewery(long id, String name){
         this.id = id;

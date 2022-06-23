@@ -7,8 +7,8 @@ import uy.edu.um.prog2.adt.LinkedList.MyLinkedList;
 
 public class Style {
     private String name;
-    MyLinkedList<Long> beers = new LinkedList<>();
-    MyArrayList<Long> reviewsAsociated = new ArrayList<>(100);
+    private MyLinkedList<Long> beers = new LinkedList<>();
+    private MyArrayList<Long> reviewsAsociated = new ArrayList<>(100);
     public Style(String name){
         this.name = name;
     }

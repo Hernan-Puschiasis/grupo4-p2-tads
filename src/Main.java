@@ -7,20 +7,27 @@ import java.io.FileReader;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Scanner;
-import static utils.uploadEntities.*;
+import static utils.UploadEntities.*;
 import static utils.Operations.*;
 
 
 public class Main {
-    public MyHash<String, User> users = new MyClosedHash<String,User>(80000);
-    public MyHash<Long, Beer> beers = new MyClosedHash<>(80000);
-    public MyHash<Long, Brewery> breweries = new MyClosedHash<>(10000);
-    public MyHash<Long, Review> reviews = new MyClosedHash<>(2100000);
-    public MyHash<String,Style> styles = new MyClosedHash<>(1000);
+    public MyHash<String, User> users;
+    public MyHash<Long, Beer> beers;
+    public MyHash<Long, Brewery> breweries;
+    public MyHash<Long, Review> reviews;
+    public MyHash<String,Style> styles;
     private static String input = "-1";
     private static final Scanner myObj = new Scanner(System.in);
 
+    public Main(){
+        users = new MyClosedHash<String,User>(80000);
+        beers = new MyClosedHash<>(80000);
+        breweries = new MyClosedHash<>(10000);
+        reviews = new MyClosedHash<>(2100000);
+        styles = new MyClosedHash<>(500);
 
+    }
     public static void main(String[] args) {
         Main main = new Main();
         main.displayMenu(main);

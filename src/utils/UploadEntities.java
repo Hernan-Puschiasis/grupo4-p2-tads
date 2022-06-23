@@ -1,13 +1,12 @@
 package utils;
 
 import entities.*;
-import uy.edu.um.prog2.adt.Hash.MyClosedHash;
 import uy.edu.um.prog2.adt.Hash.MyHash;
 
 import java.time.Instant;
 import java.util.Date;
 
-public class uploadEntities {
+public class UploadEntities {
     public static void addUser(MyHash<String, User> users, String[] line){
         if(users.inHash(line[7])){
             users.get(line[7]).addReview(Long.parseLong(line[0]));
