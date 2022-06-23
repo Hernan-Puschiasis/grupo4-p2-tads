@@ -12,10 +12,9 @@ import uy.edu.um.prog2.adt.Heap.EmptyHeapException;
 import uy.edu.um.prog2.adt.Heap.HeapOverflow;
 import uy.edu.um.prog2.adt.Heap.MyHeap;
 import uy.edu.um.prog2.adt.Heap.MyHeapMin;
-
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.ZoneId;
 
 public class Operations {
     public static void top10Breweries(MyHash<Long, Brewery> breweriesHash, MyHash<Long, Review> reviews, String year){
@@ -147,20 +146,16 @@ public class Operations {
         System.out.print(timeSpent);
         System.out.println("ms");
     }
-    public static void reviewsBetweenDates(MyHash<Long, Review> reviews, Date initial, Date last){
+    public static void reviewsBetweenDates(MyHash<Long, Review> reviews, LocalDate initial, LocalDate last){
         long startTime = System.currentTimeMillis();
         int reviewsInRange = 0;
-        SimpleDateFormat formatDate = new SimpleDateFormat("dd-MM-yyyy");
-        Date reviewDate;
+        LocalDate reviewDate;
+
         for(int i = 0;i < reviews.getKeys().size(); i++){
-            try {
-                reviewDate = formatDate.parse(formatDate.format(reviews.get(reviews.getKeys().get(i)).getDate()));
-                if((reviewDate.after(initial) && reviewDate.before(last) || reviewDate.equals(initial) || reviewDate.equals(last))){
+                reviewDate = reviews.get(reviews.getKeys().get(i)).getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+                if((reviewDate.isAfter(initial) && reviewDate.isBefore(last) || reviewDate.isEqual(initial) || reviewDate.isEqual(last))){
                     reviewsInRange++;
                 }
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
         }
         System.out.print("Reviews: ");
         System.out.println(reviewsInRange);

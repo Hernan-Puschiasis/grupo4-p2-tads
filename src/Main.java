@@ -6,6 +6,7 @@ import uy.edu.um.prog2.adt.Hash.MyHash;
 import java.io.FileReader;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.ZoneId;
 import java.util.Scanner;
 import static utils.UploadEntities.*;
 import static utils.Operations.*;
@@ -40,7 +41,11 @@ public class Main {
             CSVReader csvReader = new CSVReader(reader);
             String[] line = csvReader.readNext();
             while ((line = csvReader.readNext()) != null) {
-                if(!line[12].isEmpty()) {
+                if(!line[12].isEmpty() && !line[0].isEmpty() && !line[1].isEmpty() &&
+                        !line[2].isEmpty() && !line[3].isEmpty() && !line[4].isEmpty() &&
+                        !line[5].isEmpty() && !line[6].isEmpty() && !line[7].isEmpty() &&
+                        !line[8].isEmpty() && !line[9].isEmpty() && !line[10].isEmpty() &&
+                        !line[11].isEmpty() && !line[13].isEmpty()) {
                     addReview(reviews, line);
                     addBeer(beers, line);
                     addBrewery(breweries, line);
@@ -119,7 +124,7 @@ public class Main {
                             System.out.println("Error en las fechas. Ingrese de nuevo");
                         }
                         else{
-                            reviewsBetweenDates(reviews,formatDate.parse(newDate),formatDate.parse(finalDate));
+                            reviewsBetweenDates(reviews,formatDate.parse(newDate).toInstant().atZone(ZoneId.systemDefault()).toLocalDate(),formatDate.parse(finalDate).toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
                         }
                     } catch (ParseException e) {
                         System.out.println("Error en las fechas. Ingrese de nuevo");
